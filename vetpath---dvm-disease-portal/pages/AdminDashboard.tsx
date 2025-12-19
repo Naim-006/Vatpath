@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { Disease, HostEntry, AnimalType, TreatmentItem, TreatmentType } from '../types';
 import { ANIMAL_OPTIONS } from '../constants';
-import { suggestDiseaseDetails } from '../services/geminiService';
 
 interface AdminDashboardProps {
   diseases: Disease[];
@@ -44,7 +43,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [causalAgent, setCausalAgent] = useState('');
   const [selectedAnimals, setSelectedAnimals] = useState<string[]>([]);
   const [hostEntries, setHostEntries] = useState<Record<string, HostEntry>>({});
-  const [isGenerating, setIsGenerating] = useState<string | null>(null);
+  
   const [customHostName, setCustomHostName] = useState('');
   const [showCustomInput, setShowCustomInput] = useState(false);
 
@@ -221,30 +220,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
     }));
   };
 
-  const handleAISuggest = async (animal: string) => {
-    if (!name) {
-      alert("Please enter a disease name first.");
-      return;
-    }
-    setIsGenerating(animal);
-    const result = await suggestDiseaseDetails(name, animal);
-    setIsGenerating(null);
-
-    if (result) {
-      let structuredTreatments: TreatmentItem[] = [];
-      if (result.treatment) {
-        structuredTreatments = [
-          { id: 't-med-' + Math.random(), type: TreatmentType.MEDICINE, name: result.treatment.medicine, dose: '', frequency: '', duration: '', notes: '' },
-          { id: 't-drug-' + Math.random(), type: TreatmentType.DRUG, name: result.treatment.drug, dose: '', frequency: '', duration: '', notes: '' },
-          { id: 't-vac-' + Math.random(), type: TreatmentType.VACCINE, name: result.treatment.vaccine, dose: '', frequency: '', duration: '', notes: '' },
-        ];
-      }
-      setHostEntries(prev => ({
-        ...prev,
-        [animal]: { ...prev[animal], ...result, treatments: structuredTreatments, animalName: animal, customFields: prev[animal].customFields }
-      }));
-    }
-  };
+  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -425,12 +401,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <span className="px-3 py-1 bg-teal-600 text-white text-[10px] font-bold rounded uppercase tracking-tighter">{animal}</span>
                 <h3 className="text-base font-bold text-slate-700 dark:text-white uppercase tracking-tight">Clinical Protocol</h3>
               </div>
-              <button
-                type="button" disabled={isGenerating === animal} onClick={() => handleAISuggest(animal)}
-                className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-teal-400 text-[10px] font-bold rounded-lg hover:bg-teal-600 hover:text-white transition-all shadow-sm"
-              >
-                {isGenerating === animal ? 'GENERATE...' : 'AI SUGGEST'}
-              </button>
+              {/* AI suggestion feature removed */}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
