@@ -1,0 +1,5 @@
+{
+  "name": "VetPath - DVM Disease Portal",
+  "description": "A comprehensive veterinary disease database for DVM professionals with a searchable view portal and a secure management dashboard for inputting detailed disease information across various animal hosts.",
+  "requestFramePermissions": []
+}
