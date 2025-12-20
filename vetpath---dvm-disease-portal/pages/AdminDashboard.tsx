@@ -459,7 +459,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
               className="px-20 h-16 bg-teal-600 hover:bg-teal-700 text-white font-black text-sm rounded-[1.5rem] shadow-2xl shadow-teal-500/40 transition-all flex items-center gap-4 transform hover:-translate-y-1 active:scale-95 group"
             >
               <CheckCircle2 size={24} className="group-hover:scale-125 transition-transform" />
-              <span className="uppercase tracking-[0.15em]">Publish Protocol to Registry</span>
+              <span className="uppercase tracking-[0.15em]">Confirm & Registry Entry</span>
             </button>
           </div>
         )}
@@ -472,8 +472,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
 const SectionHeader: React.FC<{ number: string; title: string; color?: string }> = ({ number, title, color }) => (
   <div className={`flex flex-col md:flex-row md:items-center gap-5 border-b border-slate-100 dark:border-slate-800 pb-8 p-4 md:p-0 rounded-2xl md:rounded-none ${color || ''}`}>
-    <div className="w-12 h-12 md:w-14 md:h-14 bg-slate-900 dark:bg-white rounded-2xl flex items-center justify-center text-white dark:text-slate-900 font-black text-xl md:text-2xl shadow-2xl shadow-slate-900/20 dark:shadow-none italic tracking-tighter shrink-0">{number}</div>
-    <h3 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white tracking-tight italic leading-tight">{title}</h3>
+    <div className="w-12 h-12 md:w-14 md:h-14 bg-slate-900 dark:bg-white rounded-2xl flex items-center justify-center text-white dark:text-slate-900 font-black text-xl md:text-2xl shadow-2xl shadow-slate-900/20 dark:shadow-none tracking-tighter shrink-0">{number}</div>
+    <h3 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white tracking-tight leading-tight uppercase">{title}</h3>
   </div>
 );
 
@@ -482,7 +482,7 @@ const InputField: React.FC<{ label: string; value: string; onChange: (v: string)
     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">{label}</label>
     <input
       type="text" required={required} value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder}
-      className="w-full h-14 px-6 bg-slate-50/50 dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-[1.25rem] focus:ring-2 focus:ring-teal-500 transition-all dark:text-white font-black text-sm uppercase tracking-tighter placeholder:opacity-50"
+      className="w-full h-14 px-6 bg-slate-50/50 dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-[1.25rem] focus:ring-2 focus:ring-teal-500 transition-all dark:text-white font-bold text-sm tracking-tight placeholder:opacity-50"
     />
   </div>
 );

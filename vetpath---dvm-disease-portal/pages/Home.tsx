@@ -38,31 +38,26 @@ const Home: React.FC<HomeProps> = ({ diseases, onViewDetails }) => {
 
   return (
     <div className="space-y-12 animate-fade-in pb-20">
-      {/* Hero Section */}
-      <section className="relative -mt-6 md:-mt-10 py-16 md:py-24 px-4 overflow-hidden rounded-b-[3rem] bg-gradient-to-br from-slate-50 via-teal-50/50 to-white dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 border-b border-slate-100 dark:border-slate-800">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-teal-400/10 rounded-full blur-3xl -mr-20 -mt-20 user-select-none pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl -ml-20 -mb-20 user-select-none pointer-events-none"></div>
-
-        <div className="max-w-3xl mx-auto text-center relative z-10 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-white dark:bg-slate-800 rounded-full border border-slate-200 dark:border-slate-700 shadow-sm mb-4">
+      {/* Standard Header Section */}
+      <section className="relative -mt-6 md:-mt-10 py-12 md:py-16 px-4 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800">
+        <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-50 dark:bg-slate-800 rounded-full border border-slate-200 dark:border-slate-700 mb-2">
             <Stethoscope size={14} className="text-teal-600" />
-            <span className="text-[10px] font-black tracking-widest uppercase text-slate-500">CLINICAL REFERENCE v2.0</span>
+            <span className="text-[10px] font-black tracking-widest uppercase text-slate-500">Clinical Reference Portal</span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-slate-900 dark:text-white leading-[1.1]">
-            Veterinary <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-teal-400">Pathology</span> 
+          <h1 className="text-3xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white leading-tight">
+            VatPath <span className="text-teal-600 dark:text-teal-400">Diagnostic Database</span>
           </h1>
 
-          <br></br>
-
-          <div className="relative max-w-xl mx-auto mt-8 transform hover:scale-[1.01] transition-transform duration-300">
+          <div className="relative max-w-2xl mx-auto mt-8">
             <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-slate-400" />
             </div>
             <input
               type="text"
-              placeholder="Search diseases, pathogens, or hosts..."
-              className="w-full pl-12 pr-5 py-4 bg-white dark:bg-slate-800/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none transition-all text-slate-700 dark:text-white text-base font-medium placeholder:text-slate-400"
+              placeholder="Search by disease name, pathogen, or animal host..."
+              className="w-full pl-12 pr-5 py-4 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 rounded-2xl transition-all text-slate-700 dark:text-white text-base font-semibold placeholder:text-slate-400 shadow-inner"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -70,53 +65,58 @@ const Home: React.FC<HomeProps> = ({ diseases, onViewDetails }) => {
         </div>
       </section>
 
-      {/* Content Area */}
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-900/20 flex items-center justify-center text-teal-600 dark:text-teal-400 font-black text-lg">
-              {filteredAndSortedDiseases.length}
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-bold text-slate-900 dark:text-white">Active Records</span>
-              <span className="text-xs text-slate-500 font-medium">Updated 2 mins ago</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3 bg-white dark:bg-slate-800 p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-x-auto">
-            <Filter size={16} className="text-slate-400 ml-2" />
-            {SORT_OPTIONS.map(opt => (
-              <button
-                key={opt.value}
-                onClick={() => setSortBy(opt.value as SortOption)}
-                className={`px-4 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-all ${sortBy === opt.value
-                    ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-md'
-                    : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700'
-                  }`}
-              >
-                {opt.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {filteredAndSortedDiseases.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredAndSortedDiseases.map((disease, i) => (
-              <div key={disease.id} className="animate-slide-up" style={{ animationDelay: `${i * 50}ms` }}>
-                <DiseaseCard disease={disease} onClick={() => handleOpenDisease(disease)} />
+      {/* Content Area with Separation */}
+      <div className="bg-slate-50 dark:bg-slate-950/50 -mt-12 pt-20 pb-20">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-teal-600 dark:text-teal-400 font-black text-lg shadow-sm">
+                {filteredAndSortedDiseases.length}
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-20 bg-slate-50 dark:bg-slate-800/50 rounded-3xl border-2 border-dashed border-slate-200 dark:border-slate-700">
-            <div className="w-16 h-16 bg-slate-100 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
-              <Search size={32} />
+              <div className="flex flex-col">
+                <span className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight">Clinical Records</span>
+                <span className="text-[10px] text-slate-400 font-bold uppercase">Database Synchronized</span>
+              </div>
             </div>
-            <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2">No diseases found</h3>
-            <p className="text-slate-500">Try adjusting your search terms or filters.</p>
+
+            <div className="flex items-center gap-3 bg-white dark:bg-slate-900 p-1.5 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm overflow-x-auto">
+              <div className="flex items-center gap-2 px-3 border-r border-slate-100 dark:border-slate-800 mr-1">
+                <Filter size={14} className="text-slate-400" />
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Sort By</span>
+              </div>
+              {SORT_OPTIONS.map(opt => (
+                <button
+                  key={opt.value}
+                  onClick={() => setSortBy(opt.value as SortOption)}
+                  className={`px-4 py-2 rounded-lg text-xs font-black uppercase tracking-tight transition-all ${sortBy === opt.value
+                    ? 'bg-teal-600 text-white shadow-lg'
+                    : 'text-slate-400 hover:text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800'
+                    }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
           </div>
-        )}
+
+          {filteredAndSortedDiseases.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredAndSortedDiseases.map((disease, i) => (
+                <div key={disease.id} className="animate-in" style={{ animationDelay: `${i * 30}ms` }}>
+                  <DiseaseCard disease={disease} onClick={() => handleOpenDisease(disease)} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20 bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-sm">
+              <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-4 text-slate-300">
+                <Search size={32} />
+              </div>
+              <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2 uppercase tracking-tight">No matching records</h3>
+              <p className="text-slate-400 text-xs font-bold">Try adjusting your clinical search terms.</p>
+            </div>
+          )}
+        </div>
       </div>
 
       {selectedDisease && (

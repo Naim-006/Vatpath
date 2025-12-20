@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Disease, TreatmentType } from '../types';
-import { X, Activity, Shield, AlertTriangle, Info, Pill, Syringe, Tablets, ChevronRight, LayoutGrid, CheckCircle2 } from 'lucide-react';
+import { X, Activity, Shield, AlertTriangle, Info, Pill, Syringe, Tablets, ChevronRight, LayoutGrid, CheckCircle2, Stethoscope } from 'lucide-react';
 
 interface DiseaseModalProps {
   disease: Disease;
@@ -25,35 +25,31 @@ const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
         className="bg-white dark:bg-slate-950 w-full h-full md:max-h-[92vh] md:max-w-7xl md:rounded-[2.5rem] shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col border border-white/10 relative"
         role="dialog" aria-modal="true"
       >
-        {/* Header - Sticky */}
-        <header className="relative z-30 px-6 md:px-12 py-6 md:py-8 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800/50 flex items-center justify-between">
-          <div className="flex items-center gap-4 md:gap-7">
-            <div className="hidden md:flex w-16 h-16 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-[1.25rem] items-center justify-center text-white shadow-xl shadow-teal-500/20 rotate-3 group overflow-hidden relative">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.4),_transparent)]"></div>
-              <span className="font-black text-3xl italic tracking-tighter">V</span>
-            </div>
-            <div>
-              <h2 className="text-2xl md:text-4xl font-black tracking-tight text-slate-900 dark:text-white leading-none mb-1 md:mb-2 italic">
-                {disease.name}
-              </h2>
+        {/* Standardized Clinical Header */}
+        <div className="flex-none bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 p-6 md:p-8 z-30">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <span className="px-2.5 py-1 bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400 text-[10px] font-black uppercase tracking-widest rounded-md border border-teal-100/50 dark:border-teal-900/30">
-                  Clinical Profile v2.1
-                </span>
-                <span className="text-xs md:text-sm font-bold text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
-                  <Activity size={14} className="text-emerald-500" />
-                  {disease.causalAgent}
-                </span>
+                <div className="w-12 h-12 bg-teal-600 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-teal-500/20">
+                  <Stethoscope size={24} strokeWidth={2.5} />
+                </div>
+                <div className="flex flex-col">
+                  <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white leading-none tracking-tight">
+                    {disease.name}
+                  </h2>
+                  <div className="flex items-center gap-2 mt-1.5 overflow-x-auto no-scrollbar">
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.1em] shrink-0">Causal Agent:</span>
+                    <span className="text-[11px] font-bold text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/30 px-2 py-0.5 rounded-md shrink-0">{disease.causalAgent}</span>
+                  </div>
+                </div>
               </div>
             </div>
+
+            <button onClick={onClose} className="p-3 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-2xl transition-all border border-slate-100 dark:border-slate-700 md:order-none self-end md:self-auto">
+              <X size={20} />
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-2xl transition-all text-slate-400 hover:text-red-500 active:scale-95 bg-slate-50/50 dark:bg-slate-900/50"
-          >
-            <X size={24} strokeWidth={2.5} />
-          </button>
-        </header>
+        </div>
 
         {/* Main Layout */}
         <div className="flex-1 overflow-hidden flex flex-col md:flex-row bg-slate-50/30 dark:bg-slate-900/10">
@@ -63,9 +59,9 @@ const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
             {disease.hosts.map((host, idx) => (
               <button
                 key={idx} onClick={() => setActiveHostIndex(idx)}
-                className={`flex-shrink-0 px-5 py-2.5 rounded-full text-xs font-black transition-all border whitespace-nowrap ${activeHostIndex === idx
-                  ? 'bg-teal-600 border-teal-500 text-white shadow-lg shadow-teal-500/20 scale-105'
-                  : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400'
+                className={`flex-shrink-0 px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border whitespace-nowrap ${activeHostIndex === idx
+                  ? 'bg-teal-600 border-teal-500 text-white shadow-lg shadow-teal-500/20'
+                  : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 text-slate-400'
                   }`}
               >
                 {host.animalName}
@@ -80,15 +76,15 @@ const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
               {disease.hosts.map((host, idx) => (
                 <button
                   key={idx} onClick={() => setActiveHostIndex(idx)}
-                  className={`w-full group relative flex items-center justify-between p-5 rounded-3xl transition-all duration-300 ${activeHostIndex === idx
-                    ? 'bg-white dark:bg-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700/50 translate-x-1'
-                    : 'hover:bg-white/50 dark:hover:bg-slate-800/30 text-slate-500 dark:text-slate-400'
+                  className={`w-full group relative flex items-center justify-between p-4 rounded-2xl transition-all duration-300 ${activeHostIndex === idx
+                    ? 'bg-white dark:bg-slate-800 shadow-lg border border-slate-100 dark:border-slate-700/50'
+                    : 'hover:bg-white/50 dark:hover:bg-slate-800/30 text-slate-400'
                     }`}
                 >
-                  <span className={`text-sm font-black italic tracking-tight ${activeHostIndex === idx ? 'text-teal-600 dark:text-teal-400' : ''}`}>
+                  <span className={`text-[11px] font-black uppercase tracking-tight ${activeHostIndex === idx ? 'text-teal-600 dark:text-teal-400' : ''}`}>
                     {host.animalName}
                   </span>
-                  {activeHostIndex === idx && <ChevronRight size={16} className="text-teal-500" />}
+                  {activeHostIndex === idx && <ChevronRight size={14} className="text-teal-500" />}
                 </button>
               ))}
             </div>
@@ -174,8 +170,8 @@ const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
             </div>
           </main>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 
