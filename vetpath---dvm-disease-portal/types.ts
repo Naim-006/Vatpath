@@ -16,7 +16,7 @@ export enum TreatmentType {
   MEDICINE = 'Medicine',
   DRUG = 'Drug',
   VACCINE = 'Vaccine',
-  NEMATOMI = 'Nematomi'
+  NEMATOMI = 'Anthalmatics'
 }
 
 export interface TreatmentItem {
