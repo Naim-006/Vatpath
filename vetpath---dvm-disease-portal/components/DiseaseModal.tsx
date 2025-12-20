@@ -109,15 +109,15 @@ const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
 
                 {/* Left Column: Diagnostics */}
                 <div className="space-y-8 md:space-y-12">
-                  <SectionHeader title="Clinical Profile" icon={Activity} badge="Visual Signs" />
+                  <SectionHeader title="Clinical Profile" icon={Activity} badge="Visual Signs" color="bg-teal-50/50 dark:bg-teal-900/10" />
 
                   <div className="grid grid-cols-1 gap-6">
-                    <MainInfoCard label="Etiology (Primary Cause)" value={activeHost.cause} gradient="from-blue-500/10 to-teal-500/10" color="bg-blue-50/30 dark:bg-blue-900/10 border-blue-100/50 dark:border-blue-800/30" icon={Activity} />
-                    <MainInfoCard label="Signs & Symptoms" value={activeHost.clinicalSigns} gradient="from-red-500/10 to-orange-500/10" isDanger color="bg-red-50/30 dark:bg-red-900/10 border-red-100/50 dark:border-red-800/30" icon={AlertTriangle} />
+                    <MainInfoCard label="Etiology (Primary Cause)" value={activeHost.cause} gradient="from-blue-500/10 to-teal-500/10" color="bg-blue-50/60 dark:bg-blue-900/20 border-l-4 border-blue-500 shadow-blue-500/10" icon={Activity} />
+                    <MainInfoCard label="Signs & Symptoms" value={activeHost.clinicalSigns} gradient="from-red-500/10 to-orange-500/10" isDanger color="bg-red-50/60 dark:bg-red-900/20 border-l-4 border-red-500 shadow-red-500/10" icon={AlertTriangle} />
                   </div>
 
                   <div className="mt-10">
-                    <SectionHeader title="Diagnostic Analysis" icon={LayoutGrid} badge="5-Point Check" />
+                    <SectionHeader title="Diagnostic Analysis" icon={LayoutGrid} badge="5-Point Check" color="bg-slate-100/50 dark:bg-slate-800/20" />
                     {activeHost.diagnosisDetails && (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                         <DiagnosisCard label="Field Observation" value={activeHost.diagnosisDetails.field} />
@@ -134,7 +134,7 @@ const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
 
                 {/* Right Column: Treatment & Control */}
                 <div className="space-y-8 md:space-y-12">
-                  <SectionHeader title="Therapeutic Protocol" icon={Shield} badge="Clinical Agents" />
+                  <SectionHeader title="Therapeutic Protocol" icon={Shield} badge="Clinical Agents" color="bg-blue-100/30 dark:bg-blue-800/20" />
 
                   <div className="space-y-5">
                     {activeHost.treatments.length > 0 ? activeHost.treatments.map((t, i) => (
@@ -149,9 +149,9 @@ const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
                     )}
                   </div>
 
-                  <div className="mt-12 bg-emerald-50/50 dark:bg-emerald-950/20 p-8 rounded-[2rem] border border-emerald-100/50 dark:border-emerald-800/30">
-                    <SectionHeader title="Epidemiology & Control" icon={Shield} badge="Prevention" />
-                    <div className="grid grid-cols-1 gap-8 mt-6">
+                  <div className="mt-12 bg-emerald-50/60 dark:bg-emerald-950/30 p-0 md:p-8 rounded-[2rem] border-l-4 border-emerald-500 shadow-xl shadow-emerald-500/10 overflow-hidden">
+                    <SectionHeader title="Epidemiology & Control" icon={Shield} badge="Prevention" color="bg-emerald-100/30 dark:bg-emerald-800/20" />
+                    <div className="grid grid-cols-1 gap-8 mt-6 p-6 md:p-0">
                       <SimpleDetail label="Prevention Strategy" value={activeHost.prevention} />
                       <SimpleDetail label="Safety Guidelines" value={activeHost.precaution} isAlert />
                       <SimpleDetail label="Spread Dynamics" value={activeHost.epidemiology} />
@@ -181,27 +181,27 @@ const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
 
 // --- SUBCOMPONENTS ---
 
-const SectionHeader: React.FC<{ title: string; icon: any; badge?: string }> = ({ title, icon: Icon, badge }) => (
-  <div className="flex items-center justify-between group">
+const SectionHeader: React.FC<{ title: string; icon: any; badge?: string; color?: string }> = ({ title, icon: Icon, badge, color }) => (
+  <div className={`flex flex-col md:flex-row md:items-center justify-between group gap-3 p-4 md:p-0 rounded-2xl md:rounded-none ${color || 'bg-slate-50/50 md:bg-transparent'} border border-slate-100/50 md:border-0`}>
     <div className="flex items-center gap-3">
-      <div className="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center text-teal-600 dark:text-teal-400 border border-teal-100 dark:border-teal-800 transition-transform group-hover:rotate-6">
-        <Icon size={18} />
+      <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-white dark:bg-slate-800 md:bg-teal-50 md:dark:bg-teal-900/30 flex items-center justify-center text-teal-600 dark:text-teal-400 border border-teal-100 dark:border-teal-800 transition-transform group-hover:rotate-6 shadow-sm md:shadow-none">
+        <Icon size={16} />
       </div>
-      <h3 className="text-sm font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">{title}</h3>
+      <h3 className="text-xs md:text-sm font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white leading-tight">{title}</h3>
     </div>
-    {badge && <span className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest bg-slate-100 dark:bg-slate-800/50 px-2 py-1 rounded-md">{badge}</span>}
+    {badge && <span className="text-[8px] md:text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest bg-white/80 dark:bg-slate-900/50 px-2 py-1 rounded-md self-start md:self-auto border border-slate-100 dark:border-slate-800">{badge}</span>}
   </div>
 );
 
 const MainInfoCard: React.FC<{ label: string; value: string; gradient: string; isDanger?: boolean; color?: string; icon: any }> = ({ label, value, gradient, isDanger, color, icon: Icon }) => (
-  <div className={`premium-card p-5 md:p-6 relative group hover:shadow-2xl transition-all duration-700 ${color || ''} ${isDanger ? 'border-red-100/30 dark:border-red-900/20' : ''}`}>
+  <div className={`premium-card p-5 md:p-6 relative group hover:shadow-2xl transition-all duration-700 ${color || ''}`}>
     <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${gradient} rounded-bl-[80px] -mr-8 -mt-8 opacity-50 group-hover:scale-125 transition-transform duration-1000`}></div>
     <div className="relative z-10">
       <div className="flex items-center gap-2 mb-3">
-        <Icon size={12} className={isDanger ? 'text-red-500' : 'text-teal-500'} />
-        <h5 className={`text-[9px] font-black uppercase tracking-widest ${isDanger ? 'text-red-500' : 'text-slate-400'}`}>{label}</h5>
+        <Icon size={12} className={isDanger ? 'text-red-500' : 'text-blue-500'} />
+        <h5 className={`text-[9px] font-black uppercase tracking-widest ${isDanger ? 'text-red-600 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'}`}>{label}</h5>
       </div>
-      <div className={`text-sm md:text-md leading-relaxed font-bold tracking-tight ${isDanger ? 'text-slate-800 dark:text-red-200' : 'text-slate-700 dark:text-slate-200'}`}>
+      <div className={`text-sm md:text-md leading-relaxed font-bold tracking-tight ${isDanger ? 'text-slate-800 dark:text-red-100' : 'text-slate-700 dark:text-blue-100'}`}>
         {formatMarkdown(value)}
       </div>
     </div>
@@ -209,7 +209,7 @@ const MainInfoCard: React.FC<{ label: string; value: string; gradient: string; i
 );
 
 const DiagnosisCard: React.FC<{ label: string; value: string; isWide?: boolean }> = ({ label, value, isWide }) => (
-  <div className="glass-card p-4 rounded-3xl hover:border-teal-500/50 transition-colors group bg-slate-50/20 dark:bg-slate-800/20">
+  <div className="glass-card p-4 rounded-3xl hover:border-teal-500/50 transition-colors group bg-slate-50/40 dark:bg-slate-800/40 border-t-2 border-slate-200 dark:border-slate-700 shadow-sm">
     <label className="block text-[8px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center justify-between">
       {label}
       <CheckCircle2 size={10} className="text-teal-500 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -231,7 +231,7 @@ const TreatmentAgentCard: React.FC<{ treatment: any }> = ({ treatment: t }) => (
     </div>
 
     {t.type !== TreatmentType.NOTE && (
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-white/50 dark:bg-slate-950/50 rounded-2xl border border-white/20 dark:border-slate-800/50 relative overflow-hidden group">
+      <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-white/50 dark:bg-slate-950/50 rounded-2xl border border-white/20 dark:border-slate-800/50 relative overflow-hidden group">
         <div className="absolute inset-y-0 right-0 w-1 bg-teal-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <GridItem label="Dose" value={t.dose} icon={Tablets} />
         <GridItem label="Route" value={t.route} icon={Syringe} />
@@ -239,7 +239,7 @@ const TreatmentAgentCard: React.FC<{ treatment: any }> = ({ treatment: t }) => (
         <GridItem label="Duration" value={t.duration} icon={Activity} />
 
         {t.type === TreatmentType.VACCINE && t.boosterDose && (
-          <div className="col-span-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+          <div className="col-span-full xs:col-span-2 pt-2 border-t border-slate-100 dark:border-slate-800">
             <GridItem label="Booster" value={t.boosterDose} icon={Info} />
           </div>
         )}

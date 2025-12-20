@@ -296,18 +296,18 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       <form onSubmit={handleSubmit} className="space-y-12">
         {/* Step 1: Identification */}
-        <div className="premium-card p-8 md:p-12 space-y-8">
-          <SectionHeader number="01" title="Biological Identification" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="premium-card p-0 md:p-12 space-y-8 overflow-hidden">
+          <SectionHeader number="01" title="Biological Identification" color="bg-teal-50/30 dark:bg-teal-900/10" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8 md:p-0">
             <InputField label="Disease Name" value={name} onChange={setName} required placeholder="Pathology label..." />
             <InputField label="Causal Agent" value={causalAgent} onChange={setCausalAgent} required placeholder="Microorganism ID..." />
           </div>
         </div>
 
         {/* Step 2: Hosts Selection */}
-        <div className="premium-card p-8 md:p-12 space-y-8">
-          <SectionHeader number="02" title="Subject Distribution" />
-          <div className="flex flex-wrap gap-2 pb-4">
+        <div className="premium-card p-0 md:p-12 space-y-8 overflow-hidden">
+          <SectionHeader number="02" title="Subject Distribution" color="bg-teal-50/30 dark:bg-teal-900/10" />
+          <div className="p-8 md:p-0 space-y-8">
             {allPossibleAnimals.map(animal => (
               <button
                 key={animal} type="button" onClick={() => handleAnimalToggle(animal)}
@@ -365,8 +365,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
                   {/* Grid for Primary Data */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                    <TextAreaField label="Etiology (Primary Cause)" value={hostEntries[activeAnimalTab].cause} onChange={(v) => updateHostEntry(activeAnimalTab, 'cause', v)} color="bg-blue-50/10 dark:bg-blue-900/10" />
-                    <TextAreaField label="Observed Clinical Signs" value={hostEntries[activeAnimalTab].clinicalSigns} onChange={(v) => updateHostEntry(activeAnimalTab, 'clinicalSigns', v)} color="bg-red-50/10 dark:bg-red-900/10" />
+                    <TextAreaField label="Etiology (Primary Cause)" value={hostEntries[activeAnimalTab].cause} onChange={(v) => updateHostEntry(activeAnimalTab, 'cause', v)} color="bg-blue-50/40 dark:bg-blue-900/10 border-l-4 border-blue-500 shadow-blue-500/5" />
+                    <TextAreaField label="Observed Clinical Signs" value={hostEntries[activeAnimalTab].clinicalSigns} onChange={(v) => updateHostEntry(activeAnimalTab, 'clinicalSigns', v)} color="bg-red-50/40 dark:bg-red-900/10 border-l-4 border-red-500 shadow-red-500/5" />
                   </div>
 
                   {/* Diagnosis Management */}
@@ -376,12 +376,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       <h4 className="text-xs font-black uppercase tracking-widest text-slate-800 dark:text-white mt-1">Diagnostic Sub-Matrix</h4>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      <DiagnosisInput label="Field Findings" value={hostEntries[activeAnimalTab].diagnosisDetails?.field} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'field', v)} color="bg-slate-50/50 dark:bg-slate-900/10" />
-                      <DiagnosisInput label="Laboratory Analysis" value={hostEntries[activeAnimalTab].diagnosisDetails?.laboratory} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'laboratory', v)} color="bg-slate-50/50 dark:bg-slate-900/10" />
-                      <DiagnosisInput label="Virological Screening" value={hostEntries[activeAnimalTab].diagnosisDetails?.virologicalTest} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'virologicalTest', v)} color="bg-slate-50/50 dark:bg-slate-900/10" />
-                      <DiagnosisInput label="Serological Screening" value={hostEntries[activeAnimalTab].diagnosisDetails?.serologicalTest} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'serologicalTest', v)} color="bg-slate-50/50 dark:bg-slate-900/10" />
+                      <DiagnosisInput label="Field Findings" value={hostEntries[activeAnimalTab].diagnosisDetails?.field} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'field', v)} color="bg-slate-50/60 dark:bg-slate-800/20 border-t-2 border-slate-200 dark:border-slate-700" />
+                      <DiagnosisInput label="Laboratory Analysis" value={hostEntries[activeAnimalTab].diagnosisDetails?.laboratory} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'laboratory', v)} color="bg-slate-50/60 dark:bg-slate-800/20 border-t-2 border-slate-200 dark:border-slate-700" />
+                      <DiagnosisInput label="Virological Screening" value={hostEntries[activeAnimalTab].diagnosisDetails?.virologicalTest} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'virologicalTest', v)} color="bg-slate-50/60 dark:bg-slate-800/20 border-t-2 border-slate-200 dark:border-slate-700" />
+                      <DiagnosisInput label="Serological Screening" value={hostEntries[activeAnimalTab].diagnosisDetails?.serologicalTest} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'serologicalTest', v)} color="bg-slate-50/60 dark:bg-slate-800/20 border-t-2 border-slate-200 dark:border-slate-700" />
                       <div className="lg:col-span-2">
-                        <DiagnosisInput label="Post-Mortem / Necropsy Findings" value={hostEntries[activeAnimalTab].diagnosisDetails?.postMortemFindings} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'postMortemFindings', v)} color="bg-slate-50/50 dark:bg-slate-900/10" />
+                        <DiagnosisInput label="Post-Mortem / Necropsy Findings" value={hostEntries[activeAnimalTab].diagnosisDetails?.postMortemFindings} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'postMortemFindings', v)} color="bg-slate-50/60 dark:bg-slate-800/20 border-t-2 border-slate-200 dark:border-slate-700" />
                       </div>
                     </div>
                   </div>
@@ -470,10 +470,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
 // --- SUBCOMPONENTS ---
 
-const SectionHeader: React.FC<{ number: string; title: string }> = ({ number, title }) => (
-  <div className="flex items-center gap-5 border-b border-slate-100 dark:border-slate-800 pb-8">
-    <div className="w-14 h-14 bg-slate-900 dark:bg-white rounded-2xl flex items-center justify-center text-white dark:text-slate-900 font-black text-2xl shadow-2xl shadow-slate-900/20 dark:shadow-none italic tracking-tighter shrink-0">{number}</div>
-    <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight italic">{title}</h3>
+const SectionHeader: React.FC<{ number: string; title: string; color?: string }> = ({ number, title, color }) => (
+  <div className={`flex flex-col md:flex-row md:items-center gap-5 border-b border-slate-100 dark:border-slate-800 pb-8 p-4 md:p-0 rounded-2xl md:rounded-none ${color || ''}`}>
+    <div className="w-12 h-12 md:w-14 md:h-14 bg-slate-900 dark:bg-white rounded-2xl flex items-center justify-center text-white dark:text-slate-900 font-black text-xl md:text-2xl shadow-2xl shadow-slate-900/20 dark:shadow-none italic tracking-tighter shrink-0">{number}</div>
+    <h3 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white tracking-tight italic leading-tight">{title}</h3>
   </div>
 );
 
@@ -523,86 +523,96 @@ const TextAreaField: React.FC<{ label: string; value: string; onChange: (v: stri
   );
 };
 
-const TreatmentFormCard: React.FC<{ idx: number; treatment: TreatmentItem; animal: string; onUpdate: any; onRemove: any }> = ({ idx, treatment, animal, onUpdate, onRemove }) => (
-  <div className="glass-card p-6 md:p-8 rounded-[2rem] border-2 border-slate-100/50 dark:border-slate-800/50 hover:border-teal-400 group transition-all duration-500">
-    <div className="flex flex-wrap items-center gap-4 mb-6">
-      <div className="w-8 h-8 bg-slate-100 dark:bg-slate-900 rounded-full flex items-center justify-center text-[10px] font-black text-slate-300">#{idx + 1}</div>
-      <div className="flex bg-slate-100 dark:bg-slate-900 rounded-xl p-1 shadow-inner">
-        {Object.values(TreatmentType).map(type => (
-          <button
-            key={type} type="button" onClick={() => onUpdate(animal, treatment.id, 'type', type)}
-            className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${treatment.type === type ? 'bg-white dark:bg-slate-800 text-teal-600 shadow-lg' : 'text-slate-400 hover:text-slate-600'}`}
-          >
-            {type}
-          </button>
-        ))}
+const TreatmentFormCard: React.FC<{ idx: number; treatment: TreatmentItem; animal: string; onUpdate: any; onRemove: any }> = ({ idx, treatment, animal, onUpdate, onRemove }) => {
+  const borderColors: Record<string, string> = {
+    [TreatmentType.MEDICINE]: 'border-blue-500',
+    [TreatmentType.DRUG]: 'border-purple-500',
+    [TreatmentType.VACCINE]: 'border-amber-500',
+    [TreatmentType.ANTHALMATICS]: 'border-emerald-500',
+    [TreatmentType.NOTE]: 'border-slate-400',
+  };
+
+  return (
+    <div className={`glass-card p-6 md:p-8 rounded-[2rem] border-l-4 ${borderColors[treatment.type] || 'border-teal-400'} hover:shadow-2xl group transition-all duration-500 bg-white dark:bg-slate-900/50`}>
+      <div className="flex flex-wrap items-center gap-4 mb-6">
+        <div className="w-8 h-8 bg-slate-100 dark:bg-slate-900 rounded-full flex items-center justify-center text-[10px] font-black text-slate-300">#{idx + 1}</div>
+        <div className="flex bg-slate-100 dark:bg-slate-900 rounded-xl p-1 shadow-inner">
+          {Object.values(TreatmentType).map(type => (
+            <button
+              key={type} type="button" onClick={() => onUpdate(animal, treatment.id, 'type', type)}
+              className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${treatment.type === type ? 'bg-white dark:bg-slate-800 text-teal-600 shadow-lg' : 'text-slate-400 hover:text-slate-600'}`}
+            >
+              {type}
+            </button>
+          ))}
+        </div>
+        <div className="flex-1"></div>
+        <button type="button" onClick={() => onRemove(animal, treatment.id)} className="w-10 h-10 flex items-center justify-center text-slate-300 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-all"><Trash2 size={18} /></button>
       </div>
-      <div className="flex-1"></div>
-      <button type="button" onClick={() => onRemove(animal, treatment.id)} className="w-10 h-10 flex items-center justify-center text-slate-300 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-all"><Trash2 size={18} /></button>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-6">
+        {(treatment.type === TreatmentType.MEDICINE || treatment.type === TreatmentType.DRUG || treatment.type === TreatmentType.ANTHALMATICS) && (
+          <>
+            <div className="sm:col-span-2 md:col-span-4 space-y-2">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Drug Label</label>
+              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-black uppercase tracking-tighter" value={treatment.name} onChange={(v) => onUpdate(animal, treatment.id, 'name', v.target.value)} placeholder="..." />
+            </div>
+            <div className="md:col-span-2 space-y-2">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Dose</label>
+              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.dose || ''} onChange={(v) => onUpdate(animal, treatment.id, 'dose', v.target.value)} />
+            </div>
+            <div className="md:col-span-2 space-y-2">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Route</label>
+              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.route || ''} onChange={(v) => onUpdate(animal, treatment.id, 'route', v.target.value)} />
+            </div>
+            <div className="md:col-span-2 space-y-2">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Freq</label>
+              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.frequency || ''} onChange={(v) => onUpdate(animal, treatment.id, 'frequency', v.target.value)} />
+            </div>
+            <div className="md:col-span-2 space-y-2">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Days</label>
+              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.duration || ''} onChange={(v) => onUpdate(animal, treatment.id, 'duration', v.target.value)} />
+            </div>
+          </>
+        )}
+
+        {treatment.type === TreatmentType.VACCINE && (
+          <>
+            <div className="sm:col-span-2 md:col-span-3 space-y-2">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Vaccine Name</label>
+              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-black uppercase tracking-tighter" value={treatment.name} onChange={(v) => onUpdate(animal, treatment.id, 'name', v.target.value)} />
+            </div>
+            <div className="md:col-span-3 space-y-2">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Route</label>
+              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.route || ''} onChange={(v) => onUpdate(animal, treatment.id, 'route', v.target.value)} />
+            </div>
+            <div className="md:col-span-3 space-y-2">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Schedule</label>
+              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.duration || ''} onChange={(v) => onUpdate(animal, treatment.id, 'duration', v.target.value)} />
+            </div>
+            <div className="md:col-span-3 space-y-2">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Booster</label>
+              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.boosterDose || ''} onChange={(v) => onUpdate(animal, treatment.id, 'boosterDose', v.target.value)} />
+            </div>
+          </>
+        )}
+
+        {treatment.type === TreatmentType.NOTE && (
+          <div className="md:col-span-12 space-y-2">
+            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Clinical Remarks</label>
+            <textarea className="w-full h-24 px-5 py-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-2xl text-xs font-bold shadow-inner resize-none" value={treatment.notes || ''} onChange={(v) => onUpdate(animal, treatment.id, 'notes', v.target.value)} placeholder="Type remarks..." />
+          </div>
+        )}
+
+        {treatment.type !== TreatmentType.NOTE && (
+          <div className="md:col-span-12 space-y-2">
+            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Additional Agent Instruction</label>
+            <input className="w-full h-12 px-5 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-semibold italic opacity-80" value={treatment.notes || ''} onChange={(v) => onUpdate(animal, treatment.id, 'notes', v.target.value)} placeholder="e.g. Give with food..." />
+          </div>
+        )}
+      </div>
     </div>
-
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-      {(treatment.type === TreatmentType.MEDICINE || treatment.type === TreatmentType.DRUG || treatment.type === TreatmentType.ANTHALMATICS) && (
-        <>
-          <div className="md:col-span-4 space-y-2">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Drug Label</label>
-            <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-black uppercase tracking-tighter" value={treatment.name} onChange={(v) => onUpdate(animal, treatment.id, 'name', v.target.value)} placeholder="..." />
-          </div>
-          <div className="md:col-span-2 space-y-2">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Dose</label>
-            <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.dose || ''} onChange={(v) => onUpdate(animal, treatment.id, 'dose', v.target.value)} />
-          </div>
-          <div className="md:col-span-2 space-y-2">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Route</label>
-            <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.route || ''} onChange={(v) => onUpdate(animal, treatment.id, 'route', v.target.value)} />
-          </div>
-          <div className="md:col-span-2 space-y-2">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Freq</label>
-            <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.frequency || ''} onChange={(v) => onUpdate(animal, treatment.id, 'frequency', v.target.value)} />
-          </div>
-          <div className="md:col-span-2 space-y-2">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Days</label>
-            <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.duration || ''} onChange={(v) => onUpdate(animal, treatment.id, 'duration', v.target.value)} />
-          </div>
-        </>
-      )}
-
-      {treatment.type === TreatmentType.VACCINE && (
-        <>
-          <div className="md:col-span-3 space-y-2">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Vaccine Name</label>
-            <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-black uppercase tracking-tighter" value={treatment.name} onChange={(v) => onUpdate(animal, treatment.id, 'name', v.target.value)} />
-          </div>
-          <div className="md:col-span-3 space-y-2">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Route</label>
-            <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.route || ''} onChange={(v) => onUpdate(animal, treatment.id, 'route', v.target.value)} />
-          </div>
-          <div className="md:col-span-3 space-y-2">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Schedule</label>
-            <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.duration || ''} onChange={(v) => onUpdate(animal, treatment.id, 'duration', v.target.value)} />
-          </div>
-          <div className="md:col-span-3 space-y-2">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Booster</label>
-            <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.boosterDose || ''} onChange={(v) => onUpdate(animal, treatment.id, 'boosterDose', v.target.value)} />
-          </div>
-        </>
-      )}
-
-      {treatment.type === TreatmentType.NOTE && (
-        <div className="md:col-span-12 space-y-2">
-          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Clinical Remarks</label>
-          <textarea className="w-full h-24 px-5 py-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-2xl text-xs font-bold shadow-inner resize-none" value={treatment.notes || ''} onChange={(v) => onUpdate(animal, treatment.id, 'notes', v.target.value)} placeholder="Type remarks..." />
-        </div>
-      )}
-
-      {treatment.type !== TreatmentType.NOTE && (
-        <div className="md:col-span-12 space-y-2">
-          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Additional Agent Instruction</label>
-          <input className="w-full h-12 px-5 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-semibold italic opacity-80" value={treatment.notes || ''} onChange={(v) => onUpdate(animal, treatment.id, 'notes', v.target.value)} placeholder="e.g. Give with food..." />
-        </div>
-      )}
-    </div>
-  </div>
-);
+  );
+};
 
 export default AdminDashboard;
