@@ -28,7 +28,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ initialMode = 'login', onSucces
         onSuccess();
       } else if (mode === 'forgot') {
         const { error } = await (supabase.auth as any).resetPasswordForEmail(email, {
-          redirectTo: window.location.origin + '#recovery',
+          redirectTo: 'https://vatpath.vercel.app/',
         });
         if (error) throw error;
         setMessage('Check your email for the recovery link!');

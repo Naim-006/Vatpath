@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Disease, HostEntry, AnimalType, TreatmentItem, TreatmentType } from '../types';
 import { ANIMAL_OPTIONS } from '../constants';
 import { Plus, X, Trash2, Edit, Save, Shield, FolderPlus, FileText, Activity, Download, Upload } from 'lucide-react';
@@ -67,7 +67,37 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [newFieldName, setNewFieldName] = useState('');
   const [activeCustomFieldAnimal, setActiveCustomFieldAnimal] = useState<string | null>(null);
 
+  // Auto-Restore Draft
+  useEffect(() => {
+    const draft = localStorage.getItem('vetpath_admin_draft');
+    if (draft) {
+      try {
+        const parsed = JSON.parse(draft);
+        if (confirm('Unsaved work found. Restore your last session?')) {
+          setName(parsed.name || '');
+          setCausalAgent(parsed.causalAgent || '');
+          setSelectedAnimals(parsed.selectedAnimals || []);
+          setHostEntries(parsed.hostEntries || {});
+          setEditingId(parsed.editingId || null);
+          setViewMode('form');
+        } else {
+          localStorage.removeItem('vetpath_admin_draft');
+        }
+      } catch (e) {
+        console.error("Failed to restore draft", e);
+      }
+    }
+  }, []);
 
+  // Auto-Save Draft
+  useEffect(() => {
+    if (viewMode === 'form') {
+      const draft = {
+        name, causalAgent, selectedAnimals, hostEntries, editingId, timestamp: Date.now()
+      };
+      localStorage.setItem('vetpath_admin_draft', JSON.stringify(draft));
+    }
+  }, [name, causalAgent, selectedAnimals, hostEntries, editingId, viewMode]);
 
   const startEditing = (disease: Disease) => {
     setEditingId(disease.id);
