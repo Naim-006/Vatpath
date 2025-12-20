@@ -15,25 +15,45 @@ export enum AnimalType {
 export enum TreatmentType {
   MEDICINE = 'Medicine',
   DRUG = 'Drug',
+  ANTHALMATICS = 'Anthalmatics',
   VACCINE = 'Vaccine',
-  NEMATOMI = 'Anthalmatics'
+  NOTE = 'Note'
+}
+
+// New interface for detailed diagnosis information
+export interface DiagnosisDetails {
+  field: string;               // General diagnosis description
+  laboratory: string;          // Lab findings
+  virologicalTest: string;     // Virology results
+  serologicalTest: string;      // Serology results
+  postMortemFindings: string;  // Necropsy observations
+}
+
+// New interface for vaccine specific details
+export interface VaccineDetails {
+  name: string;
+  route: string;
+  duration: string;
+  boosterDose: string;
 }
 
 export interface TreatmentItem {
   id: string;
   type: TreatmentType;
-  name: string;
-  dose: string;
-  frequency: string;
-  duration: string;
-  notes: string;
+  name: string;      // Used for Drug Name or Vaccine Name
+  dose?: string;     // Medicine, Drug, Anthalmatics
+  route?: string;    // All except Note
+  frequency?: string;// Medicine, Drug, Anthalmatics
+  duration?: string; // Medicine, Drug, Anthalmatics, Vaccine
+  boosterDose?: string; // Vaccine only
+  notes?: string;    // Used as the single field for "Note" type
 }
 
 export interface HostEntry {
   animalName: string;
   cause: string;
   clinicalSigns: string;
-  diagnosis: string;
+  diagnosisDetails?: DiagnosisDetails;
   treatments: TreatmentItem[];
   prevention: string;
   precaution: string;

@@ -72,9 +72,7 @@ const Navbar: React.FC<NavbarProps> = ({
               <span className="font-black text-xl md:text-2xl tracking-tighter text-slate-800 dark:text-white leading-none">
                 VetPath
               </span>
-              <span className="text-[10px] md:text-xs uppercase tracking-[0.25em] text-teal-600 dark:text-teal-400 font-bold">
-                DVM Intelligence
-              </span>
+            
             </div>
           </div>
 

@@ -46,16 +46,14 @@ const Home: React.FC<HomeProps> = ({ diseases, onViewDetails }) => {
         <div className="max-w-3xl mx-auto text-center relative z-10 space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-white dark:bg-slate-800 rounded-full border border-slate-200 dark:border-slate-700 shadow-sm mb-4">
             <Stethoscope size={14} className="text-teal-600" />
-            <span className="text-[10px] font-black tracking-widest uppercase text-slate-500">Clinical Reference v2.0</span>
+            <span className="text-[10px] font-black tracking-widest uppercase text-slate-500">CLINICAL REFERENCE v2.0</span>
           </div>
 
           <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-slate-900 dark:text-white leading-[1.1]">
-            Veterinary <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-teal-400">Pathology</span> Registry
+            Veterinary <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-teal-400">Pathology</span> 
           </h1>
 
-          <p className="text-slate-500 dark:text-slate-400 text-lg md:text-xl font-medium max-w-xl mx-auto leading-relaxed">
-            Instant access to evidence-based protocols, epidemiological insights, and clinical guidelines for veterinary professionals.
-          </p>
+          <br></br>
 
           <div className="relative max-w-xl mx-auto mt-8 transform hover:scale-[1.01] transition-transform duration-300">
             <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">

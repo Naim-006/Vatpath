@@ -12,7 +12,11 @@ interface FlatDiseaseRow {
     HostAnimal: string;
     HostCause: string;
     HostClinicalSigns: string;
-    HostDiagnosis: string;
+    HostDiagnosisField: string;
+    HostDiagnosisLaboratory: string;
+    HostDiagnosisVirologicalTest: string;
+    HostDiagnosisSerologicalTest: string;
+    HostDiagnosisPostMortemFindings: string;
     HostPrevention: string;
     HostPrecaution: string;
     HostEpidemiology: string;
@@ -37,7 +41,11 @@ export const exportDiseases = (diseases: Disease[], type: 'xlsx' | 'csv' = 'xlsx
                 HostAnimal: '',
                 HostCause: '',
                 HostClinicalSigns: '',
-                HostDiagnosis: '',
+                HostDiagnosisField: '',
+                HostDiagnosisLaboratory: '',
+                HostDiagnosisVirologicalTest: '',
+                HostDiagnosisSerologicalTest: '',
+                HostDiagnosisPostMortemFindings: '',
                 HostPrevention: '',
                 HostPrecaution: '',
                 HostEpidemiology: '',
@@ -55,7 +63,11 @@ export const exportDiseases = (diseases: Disease[], type: 'xlsx' | 'csv' = 'xlsx
                     HostAnimal: h.animalName,
                     HostCause: h.cause,
                     HostClinicalSigns: h.clinicalSigns,
-                    HostDiagnosis: h.diagnosis,
+                    HostDiagnosisField: h.diagnosisDetails?.field || '',
+                    HostDiagnosisLaboratory: h.diagnosisDetails?.laboratory || '',
+                    HostDiagnosisVirologicalTest: h.diagnosisDetails?.virologicalTest || '',
+                    HostDiagnosisSerologicalTest: h.diagnosisDetails?.serologicalTest || '',
+                    HostDiagnosisPostMortemFindings: h.diagnosisDetails?.postMortemFindings || '',
                     HostPrevention: h.prevention,
                     HostPrecaution: h.precaution,
                     HostEpidemiology: h.epidemiology,
@@ -127,7 +139,13 @@ export const parseImportFile = async (file: File): Promise<Disease[]> => {
                             animalName: row.HostAnimal,
                             cause: row.HostCause || '',
                             clinicalSigns: row.HostClinicalSigns || '',
-                            diagnosis: row.HostDiagnosis || '',
+                            diagnosisDetails: {
+                                field: row.HostDiagnosisField || '',
+                                laboratory: row.HostDiagnosisLaboratory || '',
+                                virologicalTest: row.HostDiagnosisVirologicalTest || '',
+                                serologicalTest: row.HostDiagnosisSerologicalTest || '',
+                                postMortemFindings: row.HostDiagnosisPostMortemFindings || ''
+                            },
                             prevention: row.HostPrevention || '',
                             precaution: row.HostPrecaution || '',
                             epidemiology: row.HostEpidemiology || '',
