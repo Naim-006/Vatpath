@@ -11,6 +11,7 @@ const typeColors: Record<string, string> = {
   [TreatmentType.MEDICINE]: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
   [TreatmentType.DRUG]: 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300',
   [TreatmentType.VACCINE]: 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300',
+  [TreatmentType.NEMATOMI]: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300',
 };
 
 const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
@@ -58,8 +59,8 @@ const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
                 <button
                   key={idx} onClick={() => setActiveHostIndex(idx)}
                   className={`w-full text-left px-5 py-4 rounded-xl text-sm font-bold transition-all relative overflow-hidden group ${activeHostIndex === idx
-                      ? 'bg-white dark:bg-slate-800 text-teal-700 dark:text-teal-400 shadow-md border border-slate-100 dark:border-slate-700/50'
-                      : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    ? 'bg-white dark:bg-slate-800 text-teal-700 dark:text-teal-400 shadow-md border border-slate-100 dark:border-slate-700/50'
+                    : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                     }`}
                 >
                   <span className="relative z-10">{host.animalName}</span>
@@ -79,19 +80,11 @@ const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
                     <div className="p-5 bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-100 dark:border-red-900/20">
                       <DetailItem label="Clinical Signs" value={activeHost.clinicalSigns} color="text-slate-700 dark:text-red-200" isHighlight />
                     </div>
-                    <DetailItem label="Diagnosis Verification " value={activeHost.diagnosis} />
+                    <DetailItem label="Diagnosis" value={activeHost.diagnosis} />
                   </div>
                 </Section>
 
-                {activeHost.customFields && Object.keys(activeHost.customFields).length > 0 && (
-                  <Section title="Additional Notes" icon={Info}>
-                    <div className="grid grid-cols-1 gap-6">
-                      {Object.entries(activeHost.customFields).map(([label, value]) => (
-                        <DetailItem key={label} label={label} value={value as string} />
-                      ))}
-                    </div>
-                  </Section>
-                )}
+
               </div>
 
               <div className="space-y-10">
@@ -138,6 +131,16 @@ const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
                     <DetailItem label="Epidemiological Context" value={activeHost.epidemiology} />
                   </div>
                 </Section>
+
+                {activeHost.customFields && Object.keys(activeHost.customFields).length > 0 && (
+                  <Section title="Additional Fiels" icon={Info}>
+                    <div className="grid grid-cols-1 gap-6">
+                      {Object.entries(activeHost.customFields).map(([label, value]) => (
+                        <DetailItem key={label} label={label} value={value as string} />
+                      ))}
+                    </div>
+                  </Section>
+                )}
               </div>
             </div>
           </div>

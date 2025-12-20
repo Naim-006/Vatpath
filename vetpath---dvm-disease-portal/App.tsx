@@ -15,7 +15,6 @@ const App: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [fontScale, setFontScale] = useState<FontScale>('normal');
   const [customAnimalTypes, setCustomAnimalTypes] = useState<string[]>([]);
-  const [isAdminAuthorized, setIsAdminAuthorized] = useState(false);
 
   // Helper to validate UUID
   const isUUID = (uuid: string) => {
@@ -78,7 +77,6 @@ const App: React.FC = () => {
       } else {
         setUser(null);
         setCurrentPage('login');
-        setIsAdminAuthorized(false);
       }
     });
 
@@ -136,7 +134,6 @@ const App: React.FC = () => {
     await (supabase.auth as any).signOut();
     setUser(null);
     setCurrentPage('login');
-    setIsAdminAuthorized(false);
   };
 
   const handleUpsertDisease = async (disease: Disease) => {
@@ -238,8 +235,6 @@ const App: React.FC = () => {
             onAddCustomAnimal={handleAddCustomAnimal}
             onUpsertDisease={handleUpsertDisease}
             onDeleteDisease={handleDeleteDisease}
-            isAuthorized={isAdminAuthorized}
-            onAuthorize={() => setIsAdminAuthorized(true)}
           />
         )}
       </main>

@@ -10,8 +10,6 @@ interface AdminDashboardProps {
   onAddCustomAnimal: (name: string) => void;
   onUpsertDisease: (disease: Disease) => void;
   onDeleteDisease: (id: string) => void;
-  isAuthorized: boolean;
-  onAuthorize: () => void;
 }
 
 const emptyHost: HostEntry = {
@@ -19,12 +17,10 @@ const emptyHost: HostEntry = {
 };
 
 const AdminDashboard: React.FC<AdminDashboardProps> = ({
-  diseases, customAnimalTypes, onAddCustomAnimal, onUpsertDisease, onDeleteDisease, isAuthorized, onAuthorize
+  diseases, customAnimalTypes, onAddCustomAnimal, onUpsertDisease, onDeleteDisease
 }) => {
   const [viewMode, setViewMode] = useState<'list' | 'form'>('list');
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [secretCode, setSecretCode] = useState('');
-  const [authError, setAuthError] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleExport = () => {
@@ -71,12 +67,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [newFieldName, setNewFieldName] = useState('');
   const [activeCustomFieldAnimal, setActiveCustomFieldAnimal] = useState<string | null>(null);
 
-  const handleAuthSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const CORRECT_CODE = (process.env as any).ADMIN_SECRET_CODE || 'DVM2025';
-    if (secretCode === CORRECT_CODE) { onAuthorize(); setAuthError(false); }
-    else { setAuthError(true); }
-  };
+
 
   const startEditing = (disease: Disease) => {
     setEditingId(disease.id);
@@ -170,28 +161,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
     resetForm();
   };
 
-  if (!isAuthorized) {
-    return (
-      <div className="min-h-[60vh] flex items-center justify-center animate-fade-in">
-        <div className="w-full max-w-sm bg-white dark:bg-slate-800 p-10 rounded-[2rem] shadow-2xl border border-slate-100 dark:border-slate-700 text-center">
-          <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-teal-700 rounded-2xl flex items-center justify-center text-white mx-auto mb-8 shadow-lg shadow-teal-500/20">
-            <Shield size={32} />
-          </div>
-          <h2 className="text-xl font-black text-slate-800 dark:text-white mb-2">Security Clearance</h2>
-          <p className="text-slate-500 text-xs font-semibold mb-8">Access restricted to authorized personnel</p>
 
-          <form onSubmit={handleAuthSubmit} className="space-y-4">
-            <input
-              type="password" placeholder="ENTER CODE" value={secretCode} onChange={(e) => setSecretCode(e.target.value)}
-              className={`w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border-2 rounded-xl text-center font-bold tracking-[0.2em] focus:ring-4 focus:ring-teal-500/10 transition-all dark:text-white ${authError ? 'border-red-500 ring-red-500/10' : 'border-slate-100 dark:border-slate-700 focus:border-teal-500'}`}
-            />
-            {authError && <p className="text-red-500 text-[10px] font-bold uppercase animate-pulse">Access Denied</p>}
-            <button type="submit" className="w-full py-4 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl shadow-lg shadow-teal-500/20 transition-all active:scale-95">UNLOCK</button>
-          </form>
-        </div>
-      </div>
-    );
-  }
 
   const allPossibleAnimals = Array.from(new Set([...ANIMAL_OPTIONS.filter(a => a !== AnimalType.OTHER), ...customAnimalTypes]));
 
@@ -287,10 +257,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
         <section className="bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700 shadow-xl shadow-slate-200/50 dark:shadow-none space-y-6">
           <div className="flex items-center gap-4 border-b border-slate-100 dark:border-slate-800 pb-5">
             <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-teal-600 text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-lg shadow-teal-500/20">1</div>
-            <h3 className="text-xl font-bold text-slate-800 dark:text-white">Pathology Identification</h3>
+            <h3 className="text-xl font-bold text-slate-800 dark:text-white">Pathological Identification</h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <InputField label="Pathology Name" value={name} onChange={setName} required placeholder="e.g. Parvovirus" />
+            <InputField label="Disease Name" value={name} onChange={setName} required placeholder="e.g. Parvovirus" />
             <InputField label="Causal Agent" value={causalAgent} onChange={setCausalAgent} required placeholder="e.g. CPV-2" />
           </div>
         </section>
@@ -347,7 +317,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
               <TextAreaField label="Etiology (Cause)" value={hostEntries[animal]?.cause} onChange={(v) => updateHostEntry(animal, 'cause', v)} />
               <TextAreaField label="Clinical Signs" value={hostEntries[animal]?.clinicalSigns} onChange={(v) => updateHostEntry(animal, 'clinicalSigns', v)} />
-              <TextAreaField label="Verification" value={hostEntries[animal]?.diagnosis} onChange={(v) => updateHostEntry(animal, 'diagnosis', v)} />
+              <TextAreaField label="Diagnosis" value={hostEntries[animal]?.diagnosis} onChange={(v) => updateHostEntry(animal, 'diagnosis', v)} />
               <TextAreaField label="Prevention" value={hostEntries[animal]?.prevention} onChange={(v) => updateHostEntry(animal, 'prevention', v)} />
               <TextAreaField label="Precautions" value={hostEntries[animal]?.precaution} onChange={(v) => updateHostEntry(animal, 'precaution', v)} />
               <TextAreaField label="Epidemiology" value={hostEntries[animal]?.epidemiology} onChange={(v) => updateHostEntry(animal, 'epidemiology', v)} />
