@@ -31,7 +31,7 @@ const App: React.FC = () => {
       .from('diseases')
       .select('*')
       .order('created_at', { ascending: false });
-    
+
     if (!dError && diseasesData) {
       // Map snake_case from DB to camelCase for App
       const mappedDiseases: Disease[] = diseasesData.map((d: any) => ({
@@ -51,7 +51,7 @@ const App: React.FC = () => {
     const { data: animalsData, error: aError } = await supabase
       .from('custom_animal_types')
       .select('name');
-    
+
     if (!aError && animalsData) {
       setCustomAnimalTypes(animalsData.map(a => a.name));
     }
@@ -102,6 +102,19 @@ const App: React.FC = () => {
     localStorage.setItem('vetpath_fontscale', fontScale);
   }, [fontScale]);
 
+  const [isNightMode, setIsNightMode] = useState(false);
+  const [isReadingMode, setIsReadingMode] = useState(false);
+
+  useEffect(() => {
+    if (isNightMode) document.body.classList.add('night-mode');
+    else document.body.classList.remove('night-mode');
+  }, [isNightMode]);
+
+  useEffect(() => {
+    if (isReadingMode) document.body.classList.add('reading-mode');
+    else document.body.classList.remove('reading-mode');
+  }, [isReadingMode]);
+
   const toggleTheme = () => {
     setIsDarkMode(prev => {
       const newVal = !prev;
@@ -115,6 +128,9 @@ const App: React.FC = () => {
       return newVal;
     });
   };
+
+  const toggleNightMode = () => setIsNightMode(prev => !prev);
+  const toggleReadingMode = () => setIsReadingMode(prev => !prev);
 
   const handleLogout = async () => {
     await (supabase.auth as any).signOut();
@@ -163,7 +179,7 @@ const App: React.FC = () => {
       const newCount = (target.searchCount || 0) + 1;
       // Optimistic UI update
       setDiseases(prev => prev.map(d => d.id === id ? { ...d, searchCount: newCount } : d));
-      
+
       await supabase
         .from('diseases')
         .update({ search_count: newCount })
@@ -181,9 +197,9 @@ const App: React.FC = () => {
     return (
       <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
         <main className="max-w-7xl mx-auto px-4 py-10">
-          <AdminLogin 
-            initialMode="login" 
-            onSuccess={() => setCurrentPage('home')} 
+          <AdminLogin
+            initialMode="login"
+            onSuccess={() => setCurrentPage('home')}
           />
         </main>
       </div>
@@ -192,9 +208,13 @@ const App: React.FC = () => {
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
-      <Navbar 
-        isDarkMode={isDarkMode} 
-        toggleTheme={toggleTheme} 
+      <Navbar
+        isDarkMode={isDarkMode}
+        toggleTheme={toggleTheme}
+        isNightMode={isNightMode}
+        toggleNightMode={toggleNightMode}
+        isReadingMode={isReadingMode}
+        toggleReadingMode={toggleReadingMode}
         currentPage={currentPage === 'update-password' ? 'login' : (currentPage as any)}
         setCurrentPage={(p) => setCurrentPage(p as any)}
         user={user}
@@ -202,21 +222,21 @@ const App: React.FC = () => {
         fontScale={fontScale}
         setFontScale={setFontScale}
       />
-      
+
       <main className="max-w-7xl mx-auto px-4 py-6 md:py-10">
         {currentPage === 'home' && <Home diseases={diseases} onViewDetails={handleUpdateSearchCount} />}
         {currentPage === 'update-password' && (
-          <AdminLogin 
-            initialMode="update" 
-            onSuccess={() => setCurrentPage('home')} 
+          <AdminLogin
+            initialMode="update"
+            onSuccess={() => setCurrentPage('home')}
           />
         )}
         {currentPage === 'admin' && user && (
-          <AdminDashboard 
+          <AdminDashboard
             diseases={diseases}
             customAnimalTypes={customAnimalTypes}
             onAddCustomAnimal={handleAddCustomAnimal}
-            onUpsertDisease={handleUpsertDisease} 
+            onUpsertDisease={handleUpsertDisease}
             onDeleteDisease={handleDeleteDisease}
             isAuthorized={isAdminAuthorized}
             onAuthorize={() => setIsAdminAuthorized(true)}

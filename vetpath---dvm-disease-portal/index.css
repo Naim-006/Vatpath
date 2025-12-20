@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-custom: 'Inter', sans-serif;
+}
+
+@layer base {
+  body {
+    @apply antialiased transition-colors duration-300 font-sans;
+  }
+}
+
+/* Night Mode - Warm Filter */
+.night-mode {
+  filter: sepia(0.3) hue-rotate(-50deg) contrast(0.95);
+  background-color: #fcf8e3 !important; /* Gentle warm background override for verification */
+}
+
+/* Reading Mode - High Legibility */
+.reading-mode {
+  @apply max-w-3xl mx-auto;
+}
+.reading-mode p, 
+.reading-mode li,
+.reading-mode span {
+  font-size: 1.125rem !important; /* lg */
+  line-height: 2 !important;
+  color: #1e293b !important;
+}
+.dark .reading-mode p, 
+.dark .reading-mode li,
+.dark .reading-mode span {
+  color: #e2e8f0 !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full dark:bg-slate-700;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-300 dark:bg-slate-600;
+}
+
+/* Glassmorphism Utilities */
+.glass {
+  @apply bg-white/70 backdrop-blur-lg border border-white/20 shadow-xl dark:bg-slate-900/70 dark:border-white/10;
+}
+.glass-card {
+  @apply bg-white/50 backdrop-blur-md border border-white/20 shadow-sm hover:shadow-md transition-all duration-300 dark:bg-slate-800/50 dark:border-white/5;
+}
