@@ -64,8 +64,8 @@ const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
               <button
                 key={idx} onClick={() => setActiveHostIndex(idx)}
                 className={`flex-shrink-0 px-5 py-2.5 rounded-full text-xs font-black transition-all border whitespace-nowrap ${activeHostIndex === idx
-                    ? 'bg-teal-600 border-teal-500 text-white shadow-lg shadow-teal-500/20 scale-105'
-                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400'
+                  ? 'bg-teal-600 border-teal-500 text-white shadow-lg shadow-teal-500/20 scale-105'
+                  : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400'
                   }`}
               >
                 {host.animalName}
@@ -81,8 +81,8 @@ const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
                 <button
                   key={idx} onClick={() => setActiveHostIndex(idx)}
                   className={`w-full group relative flex items-center justify-between p-5 rounded-3xl transition-all duration-300 ${activeHostIndex === idx
-                      ? 'bg-white dark:bg-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700/50 translate-x-1'
-                      : 'hover:bg-white/50 dark:hover:bg-slate-800/30 text-slate-500 dark:text-slate-400'
+                    ? 'bg-white dark:bg-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700/50 translate-x-1'
+                    : 'hover:bg-white/50 dark:hover:bg-slate-800/30 text-slate-500 dark:text-slate-400'
                     }`}
                 >
                   <span className={`text-sm font-black italic tracking-tight ${activeHostIndex === idx ? 'text-teal-600 dark:text-teal-400' : ''}`}>
@@ -112,8 +112,8 @@ const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
                   <SectionHeader title="Clinical Profile" icon={Activity} badge="Visual Signs" />
 
                   <div className="grid grid-cols-1 gap-6">
-                    <MainInfoCard label="Etiology (Primary Cause)" value={activeHost.cause} gradient="from-blue-500/10 to-teal-500/10" icon={Activity} />
-                    <MainInfoCard label="Signs & Symptoms" value={activeHost.clinicalSigns} gradient="from-red-500/10 to-orange-500/10" isDanger icon={AlertTriangle} />
+                    <MainInfoCard label="Etiology (Primary Cause)" value={activeHost.cause} gradient="from-blue-500/10 to-teal-500/10" color="bg-blue-50/30 dark:bg-blue-900/10 border-blue-100/50 dark:border-blue-800/30" icon={Activity} />
+                    <MainInfoCard label="Signs & Symptoms" value={activeHost.clinicalSigns} gradient="from-red-500/10 to-orange-500/10" isDanger color="bg-red-50/30 dark:bg-red-900/10 border-red-100/50 dark:border-red-800/30" icon={AlertTriangle} />
                   </div>
 
                   <div className="mt-10">
@@ -193,15 +193,15 @@ const SectionHeader: React.FC<{ title: string; icon: any; badge?: string }> = ({
   </div>
 );
 
-const MainInfoCard: React.FC<{ label: string; value: string; gradient: string; isDanger?: boolean; icon: any }> = ({ label, value, gradient, isDanger, icon: Icon }) => (
-  <div className={`premium-card p-6 md:p-8 relative group hover:shadow-2xl transition-all duration-700 ${isDanger ? 'border-red-100/30 dark:border-red-900/20' : ''}`}>
+const MainInfoCard: React.FC<{ label: string; value: string; gradient: string; isDanger?: boolean; color?: string; icon: any }> = ({ label, value, gradient, isDanger, color, icon: Icon }) => (
+  <div className={`premium-card p-5 md:p-6 relative group hover:shadow-2xl transition-all duration-700 ${color || ''} ${isDanger ? 'border-red-100/30 dark:border-red-900/20' : ''}`}>
     <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${gradient} rounded-bl-[80px] -mr-8 -mt-8 opacity-50 group-hover:scale-125 transition-transform duration-1000`}></div>
     <div className="relative z-10">
-      <div className="flex items-center gap-2 mb-4">
-        <Icon size={14} className={isDanger ? 'text-red-500' : 'text-teal-500'} />
-        <h5 className={`text-[10px] font-black uppercase tracking-widest ${isDanger ? 'text-red-500' : 'text-slate-400'}`}>{label}</h5>
+      <div className="flex items-center gap-2 mb-3">
+        <Icon size={12} className={isDanger ? 'text-red-500' : 'text-teal-500'} />
+        <h5 className={`text-[9px] font-black uppercase tracking-widest ${isDanger ? 'text-red-500' : 'text-slate-400'}`}>{label}</h5>
       </div>
-      <div className={`text-base md:text-lg leading-relaxed font-bold tracking-tight ${isDanger ? 'text-slate-800 dark:text-red-200' : 'text-slate-700 dark:text-slate-200'}`}>
+      <div className={`text-sm md:text-md leading-relaxed font-bold tracking-tight ${isDanger ? 'text-slate-800 dark:text-red-200' : 'text-slate-700 dark:text-slate-200'}`}>
         {formatMarkdown(value)}
       </div>
     </div>
@@ -209,12 +209,12 @@ const MainInfoCard: React.FC<{ label: string; value: string; gradient: string; i
 );
 
 const DiagnosisCard: React.FC<{ label: string; value: string; isWide?: boolean }> = ({ label, value, isWide }) => (
-  <div className="glass-card p-5 rounded-3xl hover:border-teal-500/50 transition-colors group">
-    <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-3 flex items-center justify-between">
+  <div className="glass-card p-4 rounded-3xl hover:border-teal-500/50 transition-colors group bg-slate-50/20 dark:bg-slate-800/20">
+    <label className="block text-[8px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center justify-between">
       {label}
       <CheckCircle2 size={10} className="text-teal-500 opacity-0 group-hover:opacity-100 transition-opacity" />
     </label>
-    <div className="text-sm leading-relaxed font-semibold text-slate-600 dark:text-slate-300">
+    <div className="text-xs leading-relaxed font-semibold text-slate-600 dark:text-slate-300">
       {formatMarkdown(value)}
     </div>
   </div>
@@ -274,12 +274,12 @@ const GridItem: React.FC<{ label: string; value: string; icon: any }> = ({ label
 );
 
 const SimpleDetail: React.FC<{ label: string; value: string; isAlert?: boolean }> = ({ label, value, isAlert }) => (
-  <div className="space-y-3">
+  <div className="space-y-2">
     <div className="flex items-center gap-2">
       <div className={`w-1.5 h-1.5 rounded-full ${isAlert ? 'bg-orange-500 animate-pulse' : 'bg-teal-500'}`}></div>
       <h5 className="text-[9px] font-black uppercase tracking-widest text-slate-400">{label}</h5>
     </div>
-    <div className={`text-sm md:text-base leading-relaxed font-semibold ${isAlert ? 'text-orange-950 dark:text-orange-200' : 'text-slate-600 dark:text-slate-300'}`}>
+    <div className={`text-xs md:text-sm leading-relaxed font-semibold ${isAlert ? 'text-orange-950 dark:text-orange-200' : 'text-slate-600 dark:text-slate-300'}`}>
       {formatMarkdown(value)}
     </div>
   </div>

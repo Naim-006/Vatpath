@@ -188,6 +188,18 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
     setHostEntries(prev => ({ ...prev, [animal]: { ...prev[animal], treatments: prev[animal].treatments.filter(t => t.id !== tId) } }));
   };
 
+  const updateCustomFieldValue = (animal: string, key: string, value: string) => {
+    setHostEntries(prev => ({ ...prev, [animal]: { ...prev[animal], customFields: { ...(prev[animal].customFields || {}), [key]: value } } }));
+  };
+
+  const removeCustomField = (animal: string, key: string) => {
+    setHostEntries(prev => {
+      const newFields = { ...(prev[animal].customFields || {}) };
+      delete newFields[key];
+      return { ...prev, [animal]: { ...prev[animal], customFields: newFields } };
+    });
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (selectedAnimals.length === 0) { alert("Select at least one host."); return; }
@@ -300,8 +312,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <button
                 key={animal} type="button" onClick={() => handleAnimalToggle(animal)}
                 className={`px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border ${selectedAnimals.includes(animal)
-                    ? 'bg-teal-600 border-teal-500 text-white shadow-xl shadow-teal-500/30 -translate-y-1'
-                    : 'bg-slate-50/50 dark:bg-slate-900/50 border-slate-100 dark:border-slate-800 text-slate-500 hover:border-slate-300'
+                  ? 'bg-teal-600 border-teal-500 text-white shadow-xl shadow-teal-500/30 -translate-y-1'
+                  : 'bg-slate-50/50 dark:bg-slate-900/50 border-slate-100 dark:border-slate-800 text-slate-500 hover:border-slate-300'
                   }`}
               >
                 {animal}
@@ -335,8 +347,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <button
                   key={animal} type="button" onClick={() => setActiveAnimalTab(animal)}
                   className={`px-6 py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all duration-300 relative ${activeAnimalTab === animal
-                      ? 'bg-white dark:bg-slate-800 text-teal-600 shadow-xl shadow-slate-200/50 dark:shadow-none'
-                      : 'text-slate-400 hover:text-slate-600'
+                    ? 'bg-white dark:bg-slate-800 text-teal-600 shadow-xl shadow-slate-200/50 dark:shadow-none'
+                    : 'text-slate-400 hover:text-slate-600'
                     }`}
                 >
                   {animal}
@@ -353,8 +365,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
                   {/* Grid for Primary Data */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                    <TextAreaField label="Etiology (Primary Cause)" value={hostEntries[activeAnimalTab].cause} onChange={(v) => updateHostEntry(activeAnimalTab, 'cause', v)} />
-                    <TextAreaField label="Observed Clinical Signs" value={hostEntries[activeAnimalTab].clinicalSigns} onChange={(v) => updateHostEntry(activeAnimalTab, 'clinicalSigns', v)} />
+                    <TextAreaField label="Etiology (Primary Cause)" value={hostEntries[activeAnimalTab].cause} onChange={(v) => updateHostEntry(activeAnimalTab, 'cause', v)} color="bg-blue-50/10 dark:bg-blue-900/10" />
+                    <TextAreaField label="Observed Clinical Signs" value={hostEntries[activeAnimalTab].clinicalSigns} onChange={(v) => updateHostEntry(activeAnimalTab, 'clinicalSigns', v)} color="bg-red-50/10 dark:bg-red-900/10" />
                   </div>
 
                   {/* Diagnosis Management */}
@@ -364,12 +376,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       <h4 className="text-xs font-black uppercase tracking-widest text-slate-800 dark:text-white mt-1">Diagnostic Sub-Matrix</h4>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      <DiagnosisInput label="Field Findings" value={hostEntries[activeAnimalTab].diagnosisDetails?.field} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'field', v)} />
-                      <DiagnosisInput label="Laboratory Analysis" value={hostEntries[activeAnimalTab].diagnosisDetails?.laboratory} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'laboratory', v)} />
-                      <DiagnosisInput label="Virological Screening" value={hostEntries[activeAnimalTab].diagnosisDetails?.virologicalTest} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'virologicalTest', v)} />
-                      <DiagnosisInput label="Serological Screening" value={hostEntries[activeAnimalTab].diagnosisDetails?.serologicalTest} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'serologicalTest', v)} />
+                      <DiagnosisInput label="Field Findings" value={hostEntries[activeAnimalTab].diagnosisDetails?.field} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'field', v)} color="bg-slate-50/50 dark:bg-slate-900/10" />
+                      <DiagnosisInput label="Laboratory Analysis" value={hostEntries[activeAnimalTab].diagnosisDetails?.laboratory} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'laboratory', v)} color="bg-slate-50/50 dark:bg-slate-900/10" />
+                      <DiagnosisInput label="Virological Screening" value={hostEntries[activeAnimalTab].diagnosisDetails?.virologicalTest} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'virologicalTest', v)} color="bg-slate-50/50 dark:bg-slate-900/10" />
+                      <DiagnosisInput label="Serological Screening" value={hostEntries[activeAnimalTab].diagnosisDetails?.serologicalTest} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'serologicalTest', v)} color="bg-slate-50/50 dark:bg-slate-900/10" />
                       <div className="lg:col-span-2">
-                        <DiagnosisInput label="Post-Mortem / Necropsy Findings" value={hostEntries[activeAnimalTab].diagnosisDetails?.postMortemFindings} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'postMortemFindings', v)} />
+                        <DiagnosisInput label="Post-Mortem / Necropsy Findings" value={hostEntries[activeAnimalTab].diagnosisDetails?.postMortemFindings} onChange={(v) => updateDiagnosisDetail(activeAnimalTab, 'postMortemFindings', v)} color="bg-slate-50/50 dark:bg-slate-900/10" />
                       </div>
                     </div>
                   </div>
@@ -475,18 +487,18 @@ const InputField: React.FC<{ label: string; value: string; onChange: (v: string)
   </div>
 );
 
-const DiagnosisInput: React.FC<{ label: string; value: string; onChange: (v: string) => void }> = ({ label, value, onChange }) => (
+const DiagnosisInput: React.FC<{ label: string; value: string; onChange: (v: string) => void; color?: string }> = ({ label, value, onChange, color }) => (
   <div className="space-y-2 group">
     <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest px-1 group-focus-within:text-teal-500 transition-colors">{label}</label>
     <textarea
       rows={3} value={value} onChange={(e) => onChange(e.target.value)}
-      className="w-full px-5 py-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-2xl focus:ring-2 focus:ring-teal-500 transition-all text-sm font-semibold dark:text-white shadow-inner resize-none leading-relaxed"
+      className={`w-full px-5 py-4 ${color || 'bg-white dark:bg-slate-900'} border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-2xl focus:ring-2 focus:ring-teal-500 transition-all text-sm font-semibold dark:text-white shadow-inner resize-none leading-relaxed`}
       placeholder="Type analysis..."
     />
   </div>
 );
 
-const TextAreaField: React.FC<{ label: string; value: string; onChange: (v: string) => void }> = ({ label, value, onChange }) => {
+const TextAreaField: React.FC<{ label: string; value: string; onChange: (v: string) => void; color?: string }> = ({ label, value, onChange, color }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const handleBold = () => {
     const el = textareaRef.current; if (!el) return;
@@ -505,7 +517,7 @@ const TextAreaField: React.FC<{ label: string; value: string; onChange: (v: stri
       </div>
       <textarea
         ref={textareaRef} rows={5} value={value || ''} onChange={(e) => onChange(e.target.value)}
-        className="w-full px-6 py-5 bg-slate-50/50 dark:bg-slate-950 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-[1.5rem] focus:ring-2 focus:ring-teal-500 transition-all text-sm font-semibold dark:text-white resize-none leading-relaxed shadow-inner"
+        className={`w-full px-6 py-5 ${color || 'bg-slate-50/50 dark:bg-slate-950'} border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-[1.5rem] focus:ring-2 focus:ring-teal-500 transition-all text-xs font-semibold dark:text-white resize-none leading-relaxed shadow-inner`}
       />
     </div>
   );
