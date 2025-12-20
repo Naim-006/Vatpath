@@ -199,9 +199,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({
               NextByte iT
             </a>
           </p>
-          <p className="text-[10px] text-slate-400 mt-1">
-            © {new Date().getFullYear()} VatPath
-          </p>
+         
         </div>
       </div>
     </div>

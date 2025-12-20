@@ -536,18 +536,20 @@ const TreatmentFormCard: React.FC<{ idx: number; treatment: TreatmentItem; anima
     <div className={`glass-card p-6 md:p-8 rounded-[2rem] border-l-4 ${borderColors[treatment.type] || 'border-teal-400'} hover:shadow-2xl group transition-all duration-500 bg-white dark:bg-slate-900/50`}>
       <div className="flex flex-wrap items-center gap-4 mb-6">
         <div className="w-8 h-8 bg-slate-100 dark:bg-slate-900 rounded-full flex items-center justify-center text-[10px] font-black text-slate-300">#{idx + 1}</div>
-        <div className="flex bg-slate-100 dark:bg-slate-900 rounded-xl p-1 shadow-inner">
-          {Object.values(TreatmentType).map(type => (
-            <button
-              key={type} type="button" onClick={() => onUpdate(animal, treatment.id, 'type', type)}
-              className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${treatment.type === type ? 'bg-white dark:bg-slate-800 text-teal-600 shadow-lg' : 'text-slate-400 hover:text-slate-600'}`}
-            >
-              {type}
-            </button>
-          ))}
+        <div className="flex bg-slate-100 dark:bg-slate-900 rounded-xl p-1 shadow-inner overflow-x-auto no-scrollbar max-w-full">
+          <div className="flex min-w-max gap-1">
+            {Object.values(TreatmentType).map(type => (
+              <button
+                key={type} type="button" onClick={() => onUpdate(animal, treatment.id, 'type', type)}
+                className={`px-4 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all min-h-[44px] flex items-center justify-center ${treatment.type === type ? 'bg-white dark:bg-slate-800 text-teal-600 shadow-lg' : 'text-slate-400 hover:text-slate-600'}`}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
         </div>
         <div className="flex-1"></div>
-        <button type="button" onClick={() => onRemove(animal, treatment.id)} className="w-10 h-10 flex items-center justify-center text-slate-300 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-all"><Trash2 size={18} /></button>
+        <button type="button" onClick={() => onRemove(animal, treatment.id)} className="w-12 h-12 flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-all border border-transparent hover:border-red-100 dark:hover:border-red-900/30 shadow-sm md:shadow-none"><Trash2 size={20} /></button>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-6">
@@ -555,23 +557,23 @@ const TreatmentFormCard: React.FC<{ idx: number; treatment: TreatmentItem; anima
           <>
             <div className="sm:col-span-2 md:col-span-4 space-y-2">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Drug Label</label>
-              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-black uppercase tracking-tighter" value={treatment.name} onChange={(v) => onUpdate(animal, treatment.id, 'name', v.target.value)} placeholder="..." />
+              <input className="w-full h-14 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-black uppercase tracking-tighter" value={treatment.name} onChange={(v) => onUpdate(animal, treatment.id, 'name', v.target.value)} placeholder="..." />
             </div>
-            <div className="md:col-span-2 space-y-2">
+            <div className="sm:col-span-1 md:col-span-2 space-y-2">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Dose</label>
-              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.dose || ''} onChange={(v) => onUpdate(animal, treatment.id, 'dose', v.target.value)} />
+              <input className="w-full h-14 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.dose || ''} onChange={(v) => onUpdate(animal, treatment.id, 'dose', v.target.value)} />
             </div>
-            <div className="md:col-span-2 space-y-2">
+            <div className="sm:col-span-1 md:col-span-2 space-y-2">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Route</label>
-              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.route || ''} onChange={(v) => onUpdate(animal, treatment.id, 'route', v.target.value)} />
+              <input className="w-full h-14 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.route || ''} onChange={(v) => onUpdate(animal, treatment.id, 'route', v.target.value)} />
             </div>
-            <div className="md:col-span-2 space-y-2">
+            <div className="sm:col-span-1 md:col-span-2 space-y-2">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Freq</label>
-              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.frequency || ''} onChange={(v) => onUpdate(animal, treatment.id, 'frequency', v.target.value)} />
+              <input className="w-full h-14 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.frequency || ''} onChange={(v) => onUpdate(animal, treatment.id, 'frequency', v.target.value)} />
             </div>
-            <div className="md:col-span-2 space-y-2">
+            <div className="sm:col-span-1 md:col-span-2 space-y-2">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Days</label>
-              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.duration || ''} onChange={(v) => onUpdate(animal, treatment.id, 'duration', v.target.value)} />
+              <input className="w-full h-14 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.duration || ''} onChange={(v) => onUpdate(animal, treatment.id, 'duration', v.target.value)} />
             </div>
           </>
         )}
@@ -580,19 +582,19 @@ const TreatmentFormCard: React.FC<{ idx: number; treatment: TreatmentItem; anima
           <>
             <div className="sm:col-span-2 md:col-span-3 space-y-2">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Vaccine Name</label>
-              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-black uppercase tracking-tighter" value={treatment.name} onChange={(v) => onUpdate(animal, treatment.id, 'name', v.target.value)} />
+              <input className="w-full h-14 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-black uppercase tracking-tighter" value={treatment.name} onChange={(v) => onUpdate(animal, treatment.id, 'name', v.target.value)} />
             </div>
-            <div className="md:col-span-3 space-y-2">
+            <div className="sm:col-span-1 md:col-span-3 space-y-2">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Route</label>
-              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.route || ''} onChange={(v) => onUpdate(animal, treatment.id, 'route', v.target.value)} />
+              <input className="w-full h-14 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.route || ''} onChange={(v) => onUpdate(animal, treatment.id, 'route', v.target.value)} />
             </div>
-            <div className="md:col-span-3 space-y-2">
+            <div className="sm:col-span-1 md:col-span-3 space-y-2">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Schedule</label>
-              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.duration || ''} onChange={(v) => onUpdate(animal, treatment.id, 'duration', v.target.value)} />
+              <input className="w-full h-14 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.duration || ''} onChange={(v) => onUpdate(animal, treatment.id, 'duration', v.target.value)} />
             </div>
-            <div className="md:col-span-3 space-y-2">
+            <div className="sm:col-span-1 md:col-span-3 space-y-2">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Booster</label>
-              <input className="w-full h-12 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.boosterDose || ''} onChange={(v) => onUpdate(animal, treatment.id, 'boosterDose', v.target.value)} />
+              <input className="w-full h-14 px-4 bg-white dark:bg-slate-900 border-0 ring-1 ring-slate-100 dark:ring-slate-800 rounded-xl text-xs font-bold" value={treatment.boosterDose || ''} onChange={(v) => onUpdate(animal, treatment.id, 'boosterDose', v.target.value)} />
             </div>
           </>
         )}

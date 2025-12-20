@@ -43,7 +43,7 @@ const Home: React.FC<HomeProps> = ({ diseases, onViewDetails }) => {
         <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-50 dark:bg-slate-800 rounded-full border border-slate-200 dark:border-slate-700 mb-2">
             <Stethoscope size={14} className="text-teal-600" />
-            <span className="text-[10px] font-black tracking-widest uppercase text-slate-500">Clinical Reference Portal</span>
+            <span className="text-[10px] font-black tracking-widest uppercase text-slate-500">Clinical Reference V3.01</span>
           </div>
 
           <h1 className="text-3xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white leading-tight">

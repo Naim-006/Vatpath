@@ -55,13 +55,13 @@ const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
         <div className="flex-1 overflow-hidden flex flex-col md:flex-row bg-slate-50/30 dark:bg-slate-900/10">
 
           {/* Mobile Navigation - Scrollable Chips */}
-          <div className="md:hidden sticky top-0 z-20 bg-white/50 dark:bg-slate-950/50 backdrop-blur-md border-b border-slate-100 dark:border-slate-800/50 px-4 py-3 hide-scrollbar overflow-x-auto flex gap-2">
+          <div className="md:hidden sticky top-0 z-20 bg-white/50 dark:bg-slate-950/50 backdrop-blur-md border-b border-slate-100 dark:border-slate-800/50 px-4 py-4 hide-scrollbar overflow-x-auto flex gap-3">
             {disease.hosts.map((host, idx) => (
               <button
                 key={idx} onClick={() => setActiveHostIndex(idx)}
-                className={`flex-shrink-0 px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border whitespace-nowrap ${activeHostIndex === idx
-                  ? 'bg-teal-600 border-teal-500 text-white shadow-lg shadow-teal-500/20'
-                  : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 text-slate-400'
+                className={`flex-shrink-0 px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border whitespace-nowrap min-h-[48px] flex items-center shadow-sm ${activeHostIndex === idx
+                  ? 'bg-teal-600 border-teal-500 text-white shadow-lg shadow-teal-500/20 active:scale-95'
+                  : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 text-slate-400 hover:text-slate-600 active:bg-slate-50'
                   }`}
               >
                 {host.animalName}
@@ -76,7 +76,7 @@ const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
               {disease.hosts.map((host, idx) => (
                 <button
                   key={idx} onClick={() => setActiveHostIndex(idx)}
-                  className={`w-full group relative flex items-center justify-between p-4 rounded-2xl transition-all duration-300 ${activeHostIndex === idx
+                  className={`w-full group relative flex items-center justify-between p-5 rounded-3xl transition-all duration-300 min-h-[56px] ${activeHostIndex === idx
                     ? 'bg-white dark:bg-slate-800 shadow-lg border border-slate-100 dark:border-slate-700/50'
                     : 'hover:bg-white/50 dark:hover:bg-slate-800/30 text-slate-400'
                     }`}
@@ -100,8 +100,11 @@ const DiseaseModal: React.FC<DiseaseModalProps> = ({ disease, onClose }) => {
           <main className="flex-1 overflow-y-auto p-6 md:p-12 custom-scrollbar scroll-smooth">
             <div className="max-w-5xl mx-auto space-y-12 pb-20">
 
-              {/* Host Specific Section */}
-              <div className="animate-in grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12" key={activeHostIndex}>
+              {/* Host Specific Section with Smooth Entry */}
+              <div
+                className="animate-in grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12"
+                key={`${disease.id}-${activeHostIndex}`} // Key change triggers re-animation
+              >
 
                 {/* Left Column: Diagnostics */}
                 <div className="space-y-8 md:space-y-12">
