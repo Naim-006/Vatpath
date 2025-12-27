@@ -78,7 +78,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({
           </div>
           <h2 className="text-2xl font-black text-slate-800 dark:text-white">
             {mode === 'login'
-              ? 'VatPath Login'
+              ? 'VetPath Login'
               : mode === 'forgot'
               ? 'Account Recovery'
               : 'Update Password'}
@@ -115,7 +115,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-12 pr-5 py-4 bg-slate-50 dark:bg-slate-900/50 border rounded-2xl dark:text-white"
-                  placeholder="doctor@vatpath.com"
+                  placeholder="doctor@vetpath.com"
                 />
               </div>
             </div>

@@ -59,6 +59,7 @@ export interface HostEntry {
   precaution: string;
   epidemiology: string;
   customFields?: Record<string, string>;
+  images?: { url: string; caption: string }[];
 }
 
 export interface Disease {

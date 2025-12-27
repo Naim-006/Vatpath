@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { User, FontScale } from '../types';
 import { Menu, X, Moon, Sun, Monitor, BookOpen, Eye, LogOut, Settings, Shield } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
 interface NavbarProps {
   isDarkMode: boolean;
@@ -9,8 +10,6 @@ interface NavbarProps {
   toggleNightMode: () => void;
   isReadingMode: boolean;
   toggleReadingMode: () => void;
-  currentPage: 'home' | 'login' | 'admin';
-  setCurrentPage: (page: 'home' | 'login' | 'admin') => void;
   user: User | null;
   onLogout: () => void;
   fontScale: FontScale;
@@ -21,12 +20,18 @@ const Navbar: React.FC<NavbarProps> = ({
   isDarkMode, toggleTheme,
   isNightMode, toggleNightMode,
   isReadingMode, toggleReadingMode,
-  currentPage, setCurrentPage,
   user, onLogout,
   fontScale, setFontScale
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showAccMenu, setShowAccMenu] = useState(false);
+  const location = useLocation();
+
+  const isActive = (path: string) => {
+    if (path === '/' && location.pathname === '/') return true;
+    if (path !== '/' && location.pathname.startsWith(path)) return true;
+    return false;
+  };
 
   // Close mobile menu on resize > md
   useEffect(() => {
@@ -37,28 +42,32 @@ const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const NavButton = ({ label, active, onClick, icon: Icon }: any) => (
-    <button
-      onClick={onClick}
-      className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 ${active
+  const NavButton = ({ label, to, icon: Icon }: any) => {
+    const active = isActive(to);
+    return (
+      <Link
+        to={to}
+        onClick={() => setIsMobileMenuOpen(false)}
+        className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 ${active
           ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/30'
           : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400'
-        }`}
-    >
-      {Icon && <Icon size={18} />}
-      {label}
-    </button>
-  );
+          }`}
+      >
+        {Icon && <Icon size={18} />}
+        {label}
+      </Link>
+    );
+  };
 
   return (
     <>
-      <nav className="sticky top-0 z-[100] glass border-b border-slate-200/50 dark:border-slate-800/50 h-16 md:h-20 transition-all duration-300">
+      <nav className="sticky top-0 z-[100] glass border-b border-slate-200/50 dark:border-slate-800/50 h-16 md:h-20 transition-all duration-300 print:hidden">
         <div className="max-w-7xl mx-auto px-4 h-full flex items-center justify-between">
 
           {/* Logo */}
-          <div
+          <Link
+            to="/"
             className="flex items-center gap-3 cursor-pointer group"
-            onClick={() => setCurrentPage('home')}
           >
             <div className="relative">
               <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-teal-500 to-teal-700 rounded-2xl flex items-center justify-center text-white font-black text-xl md:text-2xl shadow-lg shadow-teal-500/20 group-hover:scale-105 transition-transform duration-300">
@@ -72,9 +81,8 @@ const Navbar: React.FC<NavbarProps> = ({
               <span className="font-black text-xl md:text-2xl tracking-tighter text-slate-800 dark:text-white leading-none">
                 VetPath
               </span>
-            
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-3 bg-slate-100/50 dark:bg-slate-800/50 p-1.5 rounded-2xl backdrop-blur-sm border border-slate-200/50 dark:border-white/5">
@@ -84,8 +92,8 @@ const Navbar: React.FC<NavbarProps> = ({
               <button
                 onClick={() => setShowAccMenu(!showAccMenu)}
                 className={`p-2.5 rounded-xl transition-all duration-300 ${showAccMenu
-                    ? 'bg-teal-100/50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300'
-                    : 'hover:bg-white dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400'
+                  ? 'bg-teal-100/50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300'
+                  : 'hover:bg-white dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400'
                   }`}
                 title="Accessibility & View"
               >
@@ -120,8 +128,8 @@ const Navbar: React.FC<NavbarProps> = ({
                         <button
                           onClick={toggleReadingMode}
                           className={`flex items-center gap-3 p-3 rounded-xl transition-all border ${isReadingMode
-                              ? 'bg-teal-50 border-teal-200 text-teal-900 dark:bg-teal-900/20 dark:border-teal-800 dark:text-teal-100'
-                              : 'border-transparent hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300'
+                            ? 'bg-teal-50 border-teal-200 text-teal-900 dark:bg-teal-900/20 dark:border-teal-800 dark:text-teal-100'
+                            : 'border-transparent hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300'
                             }`}
                         >
                           <BookOpen size={18} />
@@ -134,8 +142,8 @@ const Navbar: React.FC<NavbarProps> = ({
                         <button
                           onClick={toggleNightMode}
                           className={`flex items-center gap-3 p-3 rounded-xl transition-all border ${isNightMode
-                              ? 'bg-amber-50 border-amber-200 text-amber-900 dark:bg-amber-900/20 dark:border-amber-800 dark:text-amber-100'
-                              : 'border-transparent hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300'
+                            ? 'bg-amber-50 border-amber-200 text-amber-900 dark:bg-amber-900/20 dark:border-amber-800 dark:text-amber-100'
+                            : 'border-transparent hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300'
                             }`}
                         >
                           <Moon size={18} />
@@ -164,16 +172,16 @@ const Navbar: React.FC<NavbarProps> = ({
 
             {user ? (
               <>
-                <button
-                  onClick={() => setCurrentPage('admin')}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-black transition-all ${currentPage === 'admin'
-                      ? 'bg-slate-800 text-white dark:bg-white dark:text-slate-900 shadow-md'
-                      : 'hover:bg-white dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300'
+                <Link
+                  to="/admin"
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-black transition-all ${isActive('/admin')
+                    ? 'bg-slate-800 text-white dark:bg-white dark:text-slate-900 shadow-md'
+                    : 'hover:bg-white dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300'
                     }`}
                 >
                   <Shield size={16} />
                   ADMIN
-                </button>
+                </Link>
                 <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
                 <button
                   onClick={onLogout}
@@ -184,15 +192,15 @@ const Navbar: React.FC<NavbarProps> = ({
                 </button>
               </>
             ) : (
-              <button
-                onClick={() => setCurrentPage('login')}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-black transition-all shadow-md transform active:scale-95 ${currentPage === 'login'
-                    ? 'bg-teal-600 text-white shadow-teal-500/30'
-                    : 'bg-white dark:bg-slate-800 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/10'
+              <Link
+                to="/login"
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-black transition-all shadow-md transform active:scale-95 ${isActive('/login')
+                  ? 'bg-teal-600 text-white shadow-teal-500/30'
+                  : 'bg-white dark:bg-slate-800 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/10'
                   }`}
               >
                 SIGN IN
-              </button>
+              </Link>
             )}
           </div>
 
@@ -215,15 +223,13 @@ const Navbar: React.FC<NavbarProps> = ({
               <p className="text-xs font-black text-slate-400 uppercase tracking-widest px-2">Navigation</p>
               <NavButton
                 label="Home"
-                active={currentPage === 'home'}
-                onClick={() => { setCurrentPage('home'); setIsMobileMenuOpen(false); }}
+                to="/"
                 icon={Monitor}
               />
               {user && (
                 <NavButton
                   label="Admin Portal"
-                  active={currentPage === 'admin'}
-                  onClick={() => { setCurrentPage('admin'); setIsMobileMenuOpen(false); }}
+                  to="/admin"
                   icon={Shield}
                 />
               )}
@@ -268,8 +274,8 @@ const Navbar: React.FC<NavbarProps> = ({
                         key={scale}
                         onClick={() => setFontScale(scale)}
                         className={`flex-1 py-1.5 rounded-lg text-xs font-bold border ${fontScale === scale
-                            ? 'bg-teal-600 border-teal-600 text-white'
-                            : 'bg-white border-slate-200 text-slate-500'
+                          ? 'bg-teal-600 border-teal-600 text-white'
+                          : 'bg-white border-slate-200 text-slate-500'
                           }`}
                       >
                         {scale === 'normal' ? 'Aa' : scale === 'large' ? '+' : '++'}
@@ -289,12 +295,13 @@ const Navbar: React.FC<NavbarProps> = ({
                 Sign Out
               </button>
             ) : (
-              <button
-                onClick={() => { setCurrentPage('login'); setIsMobileMenuOpen(false); }}
-                className="w-full py-4 bg-teal-600 text-white font-black rounded-xl shadow-lg shadow-teal-500/20"
+              <Link
+                to="/login"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full py-4 flex items-center justify-center bg-teal-600 text-white font-black rounded-xl shadow-lg shadow-teal-500/20"
               >
                 Sign In
-              </button>
+              </Link>
             )}
 
             <div className="pt-6 text-center">

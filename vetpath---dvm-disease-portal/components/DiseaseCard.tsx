@@ -34,7 +34,7 @@ const DiseaseCard: React.FC<DiseaseCardProps> = ({ disease, onClick }) => {
           <div className="flex items-center gap-1.5 text-slate-400 dark:text-slate-500">
             <Bug size={12} className="shrink-0 opacity-40" />
             <p className="text-[10px] font-bold italic line-clamp-1 tracking-tight">
-              {disease.causalAgent}
+              {disease.causalAgent.replace(/<[^>]+>/g, '')}
             </p>
           </div>
         </div>
@@ -58,12 +58,14 @@ const DiseaseCard: React.FC<DiseaseCardProps> = ({ disease, onClick }) => {
             )}
           </div>
 
-          <div className="text-teal-600 dark:text-teal-400 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1 duration-300">
-            <span className="text-[10px] font-black uppercase tracking-widest">View Details</span>
-            <ArrowRight size={14} strokeWidth={2.5} />
+          <div className="w-8 h-8 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-teal-600 dark:text-teal-400 group-hover:bg-teal-600 group-hover:text-white transition-colors shadow-sm">
+            <ArrowRight size={14} />
           </div>
         </div>
       </div>
+
+      {/* Hover Gradient Overlay */}
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-teal-50/50 dark:from-teal-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
     </div>
   );
 };

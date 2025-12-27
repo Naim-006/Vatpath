@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Disease, SortOption } from '../types';
 import { SORT_OPTIONS } from '../constants';
 import DiseaseCard from '../components/DiseaseCard';
-import DiseaseModal from '../components/DiseaseModal';
 import { Search, Filter, Stethoscope } from 'lucide-react';
 
 interface HomeProps {
@@ -11,9 +11,9 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ diseases, onViewDetails }) => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>('newest');
-  const [selectedDisease, setSelectedDisease] = useState<Disease | null>(null);
 
   const filteredAndSortedDiseases = useMemo(() => {
     let result = diseases.filter(d =>
@@ -32,8 +32,8 @@ const Home: React.FC<HomeProps> = ({ diseases, onViewDetails }) => {
   }, [diseases, searchTerm, sortBy]);
 
   const handleOpenDisease = (disease: Disease) => {
-    onViewDetails(disease.id);
-    setSelectedDisease(disease);
+    // onViewDetails(disease.id); // This will be handled by the Detail page effect to ensure count accuracy on load
+    navigate(`/diseases/${disease.id}`);
   };
 
   return (
@@ -47,7 +47,7 @@ const Home: React.FC<HomeProps> = ({ diseases, onViewDetails }) => {
           </div>
 
           <h1 className="text-3xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white leading-tight">
-            VatPath <span className="text-teal-600 dark:text-teal-400">Diagnostic Database</span>
+            VetPath <span className="text-teal-600 dark:text-teal-400">Diagnostic Database</span>
           </h1>
 
           <div className="relative max-w-2xl mx-auto mt-8">
@@ -118,10 +118,6 @@ const Home: React.FC<HomeProps> = ({ diseases, onViewDetails }) => {
           )}
         </div>
       </div>
-
-      {selectedDisease && (
-        <DiseaseModal disease={selectedDisease} onClose={() => setSelectedDisease(null)} />
-      )}
     </div>
   );
 };

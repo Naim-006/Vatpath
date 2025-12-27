@@ -98,3 +98,7 @@
 .text-gradient {
   @apply bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-emerald-600 dark:from-teal-400 dark:to-emerald-400 font-black;
 }
+
+.font-serif-setup {
+  font-family: 'Merriweather', 'Georgia', serif;
+}

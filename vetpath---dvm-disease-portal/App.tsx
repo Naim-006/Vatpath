@@ -1,20 +1,21 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
-import { Disease, SortOption, User, FontScale } from './types';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { Disease, FontScale, User } from './types';
 import { INITIAL_DISEASES } from './constants';
 import { supabase } from './services/supabaseClient';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import DiseaseDetail from './pages/DiseaseDetail';
 
 const App: React.FC = () => {
   const [diseases, setDiseases] = useState<Disease[]>([]);
   const [user, setUser] = useState<User | null>(null);
-  const [currentPage, setCurrentPage] = useState<'home' | 'login' | 'admin' | 'update-password'>('login');
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [fontScale, setFontScale] = useState<FontScale>('normal');
   const [customAnimalTypes, setCustomAnimalTypes] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Helper to validate UUID
   const isUUID = (uuid: string) => {
@@ -57,26 +58,23 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    (supabase.auth as any).getSession().then(({ data: { session } }: any) => {
+    const initAuth = async () => {
+      const { data: { session } } = await (supabase.auth as any).getSession();
       if (session?.user) {
         setUser({ id: session.user.id, username: session.user.email || 'Admin' });
-        fetchData();
-        if (currentPage === 'login') setCurrentPage('home');
       }
-    });
+      await fetchData();
+      setIsLoading(false);
+    };
+
+    initAuth();
 
     const { data: { subscription } } = (supabase.auth as any).onAuthStateChange((_event: string, session: any) => {
       if (session?.user) {
         setUser({ id: session.user.id, username: session.user.email || 'Admin' });
-        fetchData();
-        if (_event === 'PASSWORD_RECOVERY') {
-          setCurrentPage('update-password');
-        } else if (currentPage === 'login') {
-          setCurrentPage('home');
-        }
+        fetchData(); // Refetch on login
       } else {
         setUser(null);
-        setCurrentPage('login');
       }
     });
 
@@ -133,7 +131,6 @@ const App: React.FC = () => {
   const handleLogout = async () => {
     await (supabase.auth as any).signOut();
     setUser(null);
-    setCurrentPage('login');
   };
 
   const handleUpsertDisease = async (disease: Disease) => {
@@ -145,9 +142,6 @@ const App: React.FC = () => {
       search_count: disease.searchCount
     };
 
-    // Only include ID if it's a valid UUID (to update existing records)
-    // If it's a new record with a temporary ID (like a timestamp), 
-    // we omit it so Supabase generates a proper UUID.
     if (isUUID(disease.id)) {
       payload.id = disease.id;
     }
@@ -190,21 +184,12 @@ const App: React.FC = () => {
     fetchData();
   };
 
-  if (!user && currentPage !== 'update-password') {
-    return (
-      <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
-        <main className="max-w-7xl mx-auto px-4 py-10">
-          <AdminLogin
-            initialMode="login"
-            onSuccess={() => setCurrentPage('home')}
-          />
-        </main>
-      </div>
-    );
+  if (isLoading) {
+    return <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900 text-slate-400">Loading...</div>;
   }
 
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
+    <div className={`min-h-screen ${isDarkMode ? 'dark' : ''} flex flex-col transition-colors duration-300`}>
       <Navbar
         isDarkMode={isDarkMode}
         toggleTheme={toggleTheme}
@@ -212,34 +197,49 @@ const App: React.FC = () => {
         toggleNightMode={toggleNightMode}
         isReadingMode={isReadingMode}
         toggleReadingMode={toggleReadingMode}
-        currentPage={currentPage === 'update-password' ? 'login' : (currentPage as any)}
-        setCurrentPage={(p) => setCurrentPage(p as any)}
         user={user}
         onLogout={handleLogout}
         fontScale={fontScale}
         setFontScale={setFontScale}
       />
 
-      <main className="max-w-7xl mx-auto px-4 py-6 md:py-10">
-        {currentPage === 'home' && <Home diseases={diseases} onViewDetails={handleUpdateSearchCount} />}
-        {currentPage === 'update-password' && (
-          <AdminLogin
-            initialMode="update"
-            onSuccess={() => setCurrentPage('home')}
+      <main className="flex-grow w-full">
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Home diseases={diseases} onViewDetails={handleUpdateSearchCount} />} />
+          <Route path="/diseases/:id" element={<DiseaseDetail diseases={diseases} onViewDetails={handleUpdateSearchCount} />} />
+
+          {/* Auth Routes */}
+          <Route path="/login" element={!user ? (
+            <div className="max-w-7xl mx-auto px-4 py-10">
+              <AdminLogin initialMode="login" onSuccess={() => { }} />
+            </div>
+          ) : <Navigate to="/admin" />}
           />
-        )}
-        {currentPage === 'admin' && user && (
-          <AdminDashboard
-            diseases={diseases}
-            customAnimalTypes={customAnimalTypes}
-            onAddCustomAnimal={handleAddCustomAnimal}
-            onUpsertDisease={handleUpsertDisease}
-            onDeleteDisease={handleDeleteDisease}
-          />
-        )}
+
+          {/* Protected Routes */}
+          <Route path="/admin" element={
+            user ? (
+              <div className="max-w-7xl mx-auto px-4 py-6 md:py-10">
+                <AdminDashboard
+                  diseases={diseases}
+                  customAnimalTypes={customAnimalTypes}
+                  onAddCustomAnimal={handleAddCustomAnimal}
+                  onUpsertDisease={handleUpsertDisease}
+                  onDeleteDisease={handleDeleteDisease}
+                />
+              </div>
+            ) : (
+              <Navigate to="/login" />
+            )
+          } />
+
+          {/* Fallback */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
       </main>
 
-      <footer className="py-10 border-t border-slate-100 dark:border-slate-800 text-center text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold">
+      <footer className="py-10 border-t border-slate-100 dark:border-slate-800 text-center text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold print:hidden">
         <p>© {new Date().getFullYear()} VetPath • <a href="#" target="_blank" rel="noopener noreferrer" className="text-teal-600 dark:text-teal-400 hover:underline">Clinical Reference V2.0</a></p><br></br>
         <p>Made with ❤️ by <a href="https://naimhossain006.netlify.app/" target="_blank" rel="noopener noreferrer" className="text-teal-600 dark:text-teal-400 hover:underline" style={{ fontSize: '12px' }}>Naim Hossain </a> </p>
         <p>  - Founder And CEO of <a href="https://nextbyte-it.netlify.app/" target="_blank" rel="noopener noreferrer" className="text-teal-600 dark:text-teal-400 hover:underline" style={{ fontSize: '12px' }}>NextByte</a></p>
