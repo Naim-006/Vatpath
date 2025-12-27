@@ -3,9 +3,10 @@ import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import { Disease, HostEntry, AnimalType, TreatmentItem, TreatmentType, DiagnosisDetails } from '../types';
 import { ANIMAL_OPTIONS } from '../constants';
-import { Plus, Trash2, Edit, Save, Shield, FileText, Upload, Download, CheckCircle2, ChevronDown, ChevronUp, Image as ImageIcon, X, Loader } from 'lucide-react';
+import { Plus, Trash2, Edit, Save, Shield, FileText, Upload, Download, CheckCircle2, ChevronDown, ChevronUp, Image as ImageIcon, X, Loader, Sparkles } from 'lucide-react';
 import { exportDiseases, parseImportFile } from '../services/ImportExportService';
 import { supabase } from '../services/supabaseClient';
+import { generateDiseaseContent } from '../services/aiResearchService';
 
 interface AdminDashboardProps {
   diseases: Disease[];
@@ -52,6 +53,13 @@ const formats = [
   'color', 'background'
 ];
 
+// Helper to strip HTML and decode common entities
+const stripHtml = (html: string) => {
+  if (!html) return '';
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  return doc.body.textContent || "";
+};
+
 const AdminDashboard: React.FC<AdminDashboardProps> = ({
   diseases, customAnimalTypes, onAddCustomAnimal, onUpsertDisease, onDeleteDisease
 }) => {
@@ -74,6 +82,45 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
   // Image Upload State
   const [uploadingImage, setUploadingImage] = useState(false);
   const imageInputRef = useRef<HTMLInputElement>(null);
+
+  // AI State
+  const [isResearching, setIsResearching] = useState(false);
+
+  const handleAIResearch = async () => {
+    if (!name || !activeAnimalTab) {
+      alert("Please enter a Disease Name and select a Species first.");
+      return;
+    }
+
+    if (!confirm(`Auto-fill protocol for ${activeAnimalTab} using AI Research? This will overwrite existing fields.`)) return;
+
+    setIsResearching(true);
+    try {
+      const result = await generateDiseaseContent(name, activeAnimalTab);
+
+      // Update Causal Agent if empty
+      if (!causalAgent && result.causalAgent) {
+        setCausalAgent(result.causalAgent);
+      }
+
+      // Merge into host entries
+      setHostEntries(prev => ({
+        ...prev,
+        [activeAnimalTab]: {
+          ...prev[activeAnimalTab],
+          ...result.hostEntry,
+          images: prev[activeAnimalTab]?.images?.length ? prev[activeAnimalTab].images : [],
+          customFields: prev[activeAnimalTab]?.customFields || {}
+        }
+      }));
+
+      alert("Research complete! Protocol updated.");
+    } catch (error: any) {
+      alert(`Research failed: ${error.message}`);
+    } finally {
+      setIsResearching(false);
+    }
+  };
 
 
   // Auto-Restore Draft
@@ -340,7 +387,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <div className="flex items-center gap-3 mb-2">
                   <h3 className="text-lg font-bold text-slate-800 dark:text-white">{disease.name}</h3>
                   <span className="px-2 py-0.5 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 text-xs rounded border border-slate-200 dark:border-slate-600">
-                    {disease.causalAgent.replace(/<[^>]+>/g, '')}
+                    {stripHtml(disease.causalAgent)}
                   </span>
                 </div>
                 <div className="flex flex-wrap gap-2 text-sm text-slate-500">
@@ -451,9 +498,20 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <div className="p-6 md:p-8" key={activeAnimalTab}>
               {activeAnimalTab && hostEntries[activeAnimalTab] ? (
                 <>
-                  <div className="mb-8">
-                    <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-2">{activeAnimalTab} Protocol</h2>
-                    <p className="text-sm text-slate-500">Edit clinical details and treatment for this species.</p>
+                  <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                      <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-1">{activeAnimalTab} Protocol</h2>
+                      <p className="text-sm text-slate-500">Edit clinical details and treatment for this species.</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleAIResearch}
+                      disabled={isResearching}
+                      className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed whitespace-nowrap"
+                    >
+                      {isResearching ? <Loader size={16} className="animate-spin" /> : <Sparkles size={16} />}
+                      <span>Research with AI</span>
+                    </button>
                   </div>
 
                   {/* Enhanced WYSIWYG Editors for Major Fields */}

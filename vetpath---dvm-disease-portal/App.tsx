@@ -4,6 +4,7 @@ import { Disease, FontScale, User } from './types';
 import { INITIAL_DISEASES } from './constants';
 import { supabase } from './services/supabaseClient';
 import Navbar from './components/Navbar';
+import DigitalNoticeModal from './components/DigitalNoticeModal';
 import Home from './pages/Home';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
@@ -165,18 +166,28 @@ const App: React.FC = () => {
   };
 
   const handleUpdateSearchCount = useCallback(async (id: string) => {
-    const target = diseases.find(d => d.id === id);
-    if (target && isUUID(id)) {
-      const newCount = (target.searchCount || 0) + 1;
-      // Optimistic UI update
-      setDiseases(prev => prev.map(d => d.id === id ? { ...d, searchCount: newCount } : d));
+    if (!id || !isUUID(id)) return;
 
-      await supabase
+    // Use a reference-free way to find the current count and update
+    // We'll update the state first, then the DB
+    setDiseases(prev => {
+      const target = prev.find(d => d.id === id);
+      if (!target) return prev;
+
+      const newCount = (target.searchCount || 0) + 1;
+
+      // Trigger DB update in the background (no await here to keep state update pure)
+      supabase
         .from('diseases')
         .update({ search_count: newCount })
-        .eq('id', id);
-    }
-  }, [diseases]);
+        .eq('id', id)
+        .then(({ error }) => {
+          if (error) console.error("Error updating search count in DB:", error);
+        });
+
+      return prev.map(d => d.id === id ? { ...d, searchCount: newCount } : d);
+    });
+  }, []); // Stable dependency array
 
   const handleAddCustomAnimal = async (name: string) => {
     const { error } = await supabase.from('custom_animal_types').insert({ name });
@@ -244,6 +255,8 @@ const App: React.FC = () => {
         <p>Made with ❤️ by <a href="https://naimhossain006.netlify.app/" target="_blank" rel="noopener noreferrer" className="text-teal-600 dark:text-teal-400 hover:underline" style={{ fontSize: '12px' }}>Naim Hossain </a> </p>
         <p>  - Founder And CEO of <a href="https://nextbyte-it.netlify.app/" target="_blank" rel="noopener noreferrer" className="text-teal-600 dark:text-teal-400 hover:underline" style={{ fontSize: '12px' }}>NextByte</a></p>
       </footer>
+
+      <DigitalNoticeModal userEmail={user?.username} />
     </div>
   );
 };
