@@ -52,7 +52,7 @@ const DigitalNoticeModal: React.FC<DigitalNoticeModalProps> = ({ userEmail }) =>
 
                                 <div className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed space-y-5">
                                     <p>I am Naim Hossain from NextByte IT, hoping you are doing well. Before using this web application, please read these instructions carefully:
-                                      <br></br>  Since I built this web-application without any funding or cost, there are two important points to consider:
+                                        <br></br>  Since I built this web-application without any funding or cost, there are two important points to consider:
                                     </p>
 
                                     <p className="bg-slate-50 dark:bg-slate-900 px-4 py-3 rounded-xl border-l-4 border-teal-500 text-sm font-medium italic">
@@ -81,7 +81,7 @@ const DigitalNoticeModal: React.FC<DigitalNoticeModalProps> = ({ userEmail }) =>
                                         </div>
                                         <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800 text-xs space-y-2">
                                             <p>I have integrated a large language model AI (Groq) to assist you in filling out forms. This AI can research and fill out forms automatically.</p>
-                                            <p>Since this is the free plan, you can use the AI to generate 8–10 diseases per day. Be careful and strategic when requesting AI assistance.</p>
+                                            <p>Since this is the free plan, you can use the AI to generate 8–10 diseases per day. Be careful and strategic when requesting AI assistance. And there is another ai assistant chatbox which is unlimited to use . </p>
                                         </div>
                                     </div>
 
