@@ -7,6 +7,7 @@ import { Plus, Trash2, Edit, Save, Shield, FileText, Upload, Download, CheckCirc
 import { exportDiseases, parseImportFile } from '../services/ImportExportService';
 import { supabase } from '../services/supabaseClient';
 import { generateDiseaseContent } from '../services/aiResearchService';
+import AIChatBox from '../components/AIChatBox';
 
 interface AdminDashboardProps {
   diseases: Disease[];
@@ -667,6 +668,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
         )}
       </form>
+      <AIChatBox />
     </div>
   );
 };

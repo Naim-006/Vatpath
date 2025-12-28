@@ -55,6 +55,13 @@
    npm install
    ```
 
+3. Configure Environment Variables:
+   Create a `.env` file in the root directory and add your credentials:
+   ```env
+   VITE_SUPABASE_URL=your_supabase_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   VITE_GROQ_API_KEY=your_groq_api_key
+   ```
 
 4. Run in Development Mode:
    ```bash
