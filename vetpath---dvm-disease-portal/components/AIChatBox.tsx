@@ -65,7 +65,7 @@ const AIChatBox: React.FC = () => {
                     <div className="p-1.5 bg-white/20 rounded-lg">
                         <Bot size={18} />
                     </div>
-                    <span className="font-bold text-sm tracking-wide">Vatpath AI Assistant <p style={{ fontSize: '10px' }}>@Developed By <p style={{ color: 'white' }}>Naim Hossain</p></p></span>
+                    <span className="font-bold text-sm tracking-wide">Vatpath AI Assistant <p style={{ fontSize: '8px' }}>@Developed By Naim Hossain</p></span>
                 </div>
                 <div className="flex items-center gap-1">
                     <button
