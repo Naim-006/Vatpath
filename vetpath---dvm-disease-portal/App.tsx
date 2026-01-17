@@ -252,8 +252,7 @@ const App: React.FC = () => {
 
       <footer className="py-10 border-t border-slate-100 dark:border-slate-800 text-center text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold print:hidden">
         <p>© {new Date().getFullYear()} VetPath • <a href="#" target="_blank" rel="noopener noreferrer" className="text-teal-600 dark:text-teal-400 hover:underline">Clinical Reference V2.0</a></p><br></br>
-        <p>Made with ❤️ by <a href="https://naimhossain006.netlify.app/" target="_blank" rel="noopener noreferrer" className="text-teal-600 dark:text-teal-400 hover:underline" style={{ fontSize: '12px' }}>Naim Hossain </a> </p>
-        <p>  - Founder And CEO of <a href="https://nextbyte-it.netlify.app/" target="_blank" rel="noopener noreferrer" className="text-teal-600 dark:text-teal-400 hover:underline" style={{ fontSize: '12px' }}>NextByte</a></p>
+        <p>Made with ❤️ by Naim Hossain </p>
       </footer>
 
       <DigitalNoticeModal userEmail={user?.username} />
