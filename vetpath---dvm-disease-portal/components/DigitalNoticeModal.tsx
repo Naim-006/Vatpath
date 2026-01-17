@@ -66,7 +66,7 @@ const DigitalNoticeModal: React.FC<DigitalNoticeModalProps> = ({ userEmail }) =>
                                     </div>
                                     <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800 text-xs space-y-2">
                                         <p>Get instant answers to your veterinary questions with our unlimited AI chatbox. Ask anything, anytime—from disease clarifications to treatment recommendations.</p>
-                                        <p className="text-indigo-600 dark:text-indigo-400 font-bold">💡 Your 24/7 veterinary knowledge companion!</p>
+                                        <p className="text-indigo-600 dark:text-indigo-400 font-bold"> 24/7 veterinary knowledge companion!</p>
                                     </div>
                                 </div>
 
@@ -91,11 +91,11 @@ const DigitalNoticeModal: React.FC<DigitalNoticeModalProps> = ({ userEmail }) =>
                                     </div>
                                     <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800 text-xs space-y-2">
                                         <p>Organize and access detailed disease profiles including clinical signs, diagnostic procedures, treatment protocols, and prevention strategies—all in one centralized platform.</p>
-                                        <p className="text-amber-600 dark:text-amber-400 font-bold">📚 Your complete veterinary reference library!</p>
+                                        
                                     </div>
                                 </div>
 
-                                <p className="font-black text-slate-800 dark:text-slate-200 pt-2 tracking-tight">Ready to revolutionize your veterinary workflow? Let's get started! 🚀</p>
+                                <p className="font-black text-slate-800 dark:text-slate-200 pt-2 tracking-tight">Ready to revolutionize your veterinary workflow? Let's get started! </p>
                             </div>
                         </div>
 
@@ -121,3 +121,4 @@ const DigitalNoticeModal: React.FC<DigitalNoticeModalProps> = ({ userEmail }) =>
 };
 
 export default DigitalNoticeModal;
+
