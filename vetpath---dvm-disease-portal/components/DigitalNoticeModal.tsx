@@ -47,45 +47,65 @@ const DigitalNoticeModal: React.FC<DigitalNoticeModalProps> = ({ userEmail }) =>
                         <div className="space-y-6 animate-slide-up">
                             <div className="space-y-4">
                                 <h3 className="text-xl font-black text-slate-800 dark:text-white leading-tight">
-                                    Hello brother, welcome to VetPath v3.01!
+                                    Welcome to VetPath v3.01! 🎉
                                 </h3>
 
                                 <div className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed space-y-5">
-                                    <p>I am Naim Hossain from NextByte IT, hoping you are doing well. Before using this web application, please read these instructions carefully:
-                                        <br></br>  Since I built this web-application without any funding or cost, there are two important points to consider:
+                                    <p>Hello! I'm Naim Hossain from NextByte IT. Welcome to your comprehensive veterinary disease portal designed to streamline your clinical research and documentation.
                                     </p>
 
-                                    <p className="bg-slate-50 dark:bg-slate-900 px-4 py-3 rounded-xl border-l-4 border-teal-500 text-sm font-medium italic">
-                                        "This page wil show only once. You must read and understand these instructions before proceeding to use the application."
+                                    <p className="bg-gradient-to-r from-teal-50 to-indigo-50 dark:from-teal-900/20 dark:to-indigo-900/20 px-4 py-3 rounded-xl border-l-4 border-teal-500 text-sm font-medium">
+                                        Discover the powerful features that make VetPath your ultimate veterinary companion!
                                     </p>
 
                                     <div className="space-y-3">
                                         <div className="flex items-center gap-2 font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider text-xs">
                                             <div className="w-1.5 h-1.5 rounded-full bg-teal-500"></div>
-                                            1. Limited Use of Images
+                                            🤖 AI-Powered Disease Research
                                         </div>
                                         <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800 text-xs space-y-3">
-                                            <p>You are getting 1 GB of free storage on my data server, so you can upload images of diseases until the storage reaches 1 GB.</p>
-                                            <p>The maximum upload size per image is 500 KB (which is more than enough). I recommend uploading images in the lowest possible size to allow more uploads over time.</p>
-                                            <div className="flex items-center gap-2 pt-1">
-                                                <ExternalLink size={12} className="text-teal-600" />
-                                                <p>To reduce image size, compress using <a href="https://imagecompressor.com/" target="_blank" rel="noopener noreferrer" className="text-teal-600 font-bold hover:underline">imagecompressor.com</a></p>
-                                            </div>
+                                            <p>Leverage advanced AI (Groq) to automatically research and populate disease information. Simply provide a disease name, and watch as the AI fills out comprehensive details including symptoms, diagnosis, treatment, and prevention.</p>
+                                            <p className="text-teal-600 dark:text-teal-400 font-bold">✨ Save hours of manual research with intelligent auto-fill capabilities!</p>
                                         </div>
                                     </div>
 
                                     <div className="space-y-3">
                                         <div className="flex items-center gap-2 font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider text-xs">
                                             <div className="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
-                                            2. Limitation of AI Usage
+                                            💬 Unlimited AI Chat Assistant
                                         </div>
                                         <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800 text-xs space-y-2">
-                                            <p>I have integrated a large language model AI (Groq) to assist you in filling out forms. This AI can research and fill out forms automatically.</p>
-                                            <p>Since this is the free plan, you can use the AI to generate 8–10 diseases per day. Be careful and strategic when requesting AI assistance. And there is another ai assistant chatbox which is unlimited to use . </p>
+                                            <p>Get instant answers to your veterinary questions with our unlimited AI chatbox. Ask anything, anytime—from disease clarifications to treatment recommendations.</p>
+                                            <p className="text-indigo-600 dark:text-indigo-400 font-bold">💡 Your 24/7 veterinary knowledge companion!</p>
                                         </div>
                                     </div>
 
-                                    <p className="font-black text-slate-800 dark:text-slate-200 pt-2 tracking-tight">Thank you!</p>
+                                    <div className="space-y-3">
+                                        <div className="flex items-center gap-2 font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider text-xs">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+                                            📸 Smart Image Management
+                                        </div>
+                                        <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800 text-xs space-y-3">
+                                            <p>Upload and organize disease images with 1 GB of cloud storage. Support for up to 500 KB per image ensures high-quality visual documentation.</p>
+                                            <div className="flex items-center gap-2 pt-1">
+                                                <ExternalLink size={12} className="text-purple-600" />
+                                                <p>Pro tip: Optimize images at <a href="https://imagecompressor.com/" target="_blank" rel="noopener noreferrer" className="text-purple-600 font-bold hover:underline">imagecompressor.com</a> for maximum storage efficiency</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <div className="flex items-center gap-2 font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider text-xs">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
+                                            🗂️ Comprehensive Disease Portal
+                                        </div>
+                                        <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800 text-xs space-y-2">
+                                            <p>Organize and access detailed disease profiles including clinical signs, diagnostic procedures, treatment protocols, and prevention strategies—all in one centralized platform.</p>
+                                            <p className="text-amber-600 dark:text-amber-400 font-bold">📚 Your complete veterinary reference library!</p>
+                                        </div>
+                                    </div>
+
+                                    <p className="font-black text-slate-800 dark:text-slate-200 pt-2 tracking-tight">Ready to revolutionize your veterinary workflow? Let's get started! 🚀</p>
                                 </div>
                             </div>
 
